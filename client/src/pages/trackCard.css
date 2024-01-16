@@ -1,0 +1,14 @@
+/* ArtistCard.css */
+
+.track-card {
+    border: 1px solid #ddd;
+    padding: 16px;
+    margin: 8px;
+    text-align: center;
+  }
+  
+  .track-card img {
+    max-width: 100px;
+    height: auto;
+  }
+  

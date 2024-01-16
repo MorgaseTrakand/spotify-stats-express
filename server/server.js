@@ -1,0 +1,156 @@
+const cookieParser = require('cookie-parser')
+const csrf = require('csurf')
+const bodyParser = require('body-parser')
+const express = require('express')
+const cors = require('cors')
+const axios = require('axios');
+const querystring = require('querystring');
+const { access } = require('fs')
+
+var app = express();
+const port = 5000;
+
+// setup route middlewares
+var csrfProtection = csrf({ cookie: true })
+var parseForm = bodyParser.urlencoded({ extended: false })
+
+app.use(cookieParser());
+app.use(bodyParser.json());
+
+const corsOptions = {
+    origin: "http://localhost:3000",
+    credentials: true,
+}
+app.use(cors(corsOptions));
+app.use(csrfProtection);
+
+//Spotify API credentials
+const CLIENT_ID = "eabd68e3d6d94d698c4f91470c3f9c37";
+const CLIENT_SECRET = "03b3cdcd63874050b86f321620586d27";
+const REDIRECT_URI = "http://localhost:5000/callback";
+const SPOTIFY_AUTH_URL = "https://accounts.spotify.com/authorize";
+const SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token";
+
+//login route
+app.get('/login', (req, res) => {
+    const csrfToken = req.csrfToken();
+    res.cookie('XSRF-TOKEN', csrfToken);
+    authorize_url = (
+        SPOTIFY_AUTH_URL+"?client_id="+CLIENT_ID
+        +"&response_type=code&redirect_uri="+REDIRECT_URI
+        +"&scope=user-read-private user-read-email user-top-read user-read-recently-played&state="+csrfToken
+    )
+    res.json( {"authUrl": authorize_url} )
+    //res.redirect(authorize_url);
+})
+
+app.get('/callback', csrfProtection, async (req, res) => {
+    const code = req.query.code;
+    const requestData = {
+        "grant_type": "authorization_code",
+        "code": code,
+        "redirect_uri": REDIRECT_URI,
+        "client_id": CLIENT_ID,
+        "client_secret": CLIENT_SECRET,
+    };
+    
+    const response = await axios.post(
+        SPOTIFY_TOKEN_URL,
+        querystring.stringify(requestData), // Convert data to x-www-form-urlencoded format
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Basic ' + Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64'),
+          },
+        }
+      )
+    .then(response => {
+        const access_token = response.data.access_token;
+        const refresh_token = response.data.refresh_token;
+        redirect_url = 'http://localhost:3000/dashboard?access_token='+access_token+"&refresh_token="+refresh_token
+        res.redirect(redirect_url);
+     })
+    .catch(error => {
+        console.error("Error in Axios request:", error);
+        res.status(500).send("Internal Server Error");
+    });
+})
+
+app.get('/top-tracks', csrfProtection, async (req, res) => {
+    const access_token = req.query.access_token;
+    const limit = req.query.limit;
+
+    // Get user's top tracks from Spotify API
+    const response = await axios.get('https://api.spotify.com/v1/me/top/tracks?&limit='+limit, {
+      headers: {
+        'Authorization': `Bearer ${access_token}`
+      }
+    })
+    .then(response => {
+      console.log(response)
+      const topTracks = response.data.items.map((track, index) => ({
+        position: index + 1,
+        name: track.name,
+        artist: track.artists[0].name,
+        image: track.album.images
+      }));
+      console.log(topTracks)
+      res.json(topTracks);
+    })
+    .catch(error => {
+      console.error("Error in Axios request:", error);
+      res.status(500).send("Internal Server Error");
+    })
+});
+
+
+app.get('/top-artists', csrfProtection, async (req, res) => {
+  const access_token = req.query.access_token;
+  const limit = req.query.limit;
+
+  // Get user's top tracks from Spotify API
+  const response = await axios.get('https://api.spotify.com/v1/me/top/artists?&limit='+limit, {
+    headers: {
+      'Authorization': `Bearer ${access_token}`
+    }
+  })
+  .then(response => {
+    console.log(response.data)
+    const topArtists = response.data.items.map((artist, index) => ({
+      position: index + 1,
+      name: artist.name,
+      image: artist.images
+    }));
+    res.json(topArtists);
+  })
+  .catch(error => {
+    console.error("Error in Axios request:", error);
+    res.status(500).send("Internal Server Error");
+  })
+});
+
+
+app.get('/token_valid', csrfProtection, async (req, res) => {
+  const me_url = 'https://api.spotify.com/v1/me';
+  const access_token = req.query.access_token;
+  const isValid = false;
+  try {
+    const response = await axios.get(me_url, {
+      headers: {
+        'Authorization': `Bearer ${access_token}`
+      }
+    })
+    if (response.status === 200) {
+      isValid = true;
+      res.json(isValid)
+    } else {
+      res.json(isValid)
+    }
+  }
+  catch(error)  {
+    console.error("Error in Axios request:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.listen(port)
