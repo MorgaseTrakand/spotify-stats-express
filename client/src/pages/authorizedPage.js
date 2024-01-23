@@ -1,104 +1,72 @@
 import '../App.css';
 import './dashboard.css'
-import React, { useContext, useEffect, useState } from 'react';
-import MyContext from '../myContext';
-import { useNavigate } from 'react-router-dom';
-import { logout } from "./utils";
+import React, { useState } from 'react';
 import ArtistCard from './artistCard';
 import TrackCard from './trackCard';
-import { usePagePreCheck } from './utils';
+import Layout from '../components/Layout'
+import Data from '../components/Data'
+import '../App.css';
+import { useNavigate } from 'react-router-dom';
 
 
 function AuthorizedPage() {
-  const [artistsData, setArtistsData] = useState([]);
-  const [trackData, setTrackData] = useState([]);
-
-  const queryString = window.location.search; // Gets the query string (?param1=value1&param2=value2)
-  const params = new URLSearchParams(queryString);
-  const access_token = params.get('access_token');
-  const refresh_token = params.get('refresh_token');
-  localStorage.setItem('access_token', access_token);
-  localStorage.setItem('refresh_token', refresh_token)
-  const limit = 500;
+  var username = "Morgase";
   const navigate = useNavigate();
-
-
-  function topArtists() {
-    fetch(`http://localhost:5000/top-artists?access_token=${access_token}&limit=${limit}`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log(data);      
-      setArtistsData(data)  
-    })
-    .catch(error => {
-      console.error('Fetch error:', error);
-    });
+  function handleLogo() {
+    navigate('/');
   }
 
-  function topTracks() {
-    fetch(`http://localhost:5000/top-tracks?access_token=${access_token}&limit=${limit}`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log(data)     
-      setTrackData(data)   
-    })
-    .catch(error => {
-      console.error('Fetch error:', error);
-    });
-
-  }
-
-
-  function handleLogout() {
-    logout(navigate);
-  }
-
-  function handlePrint() {
-    console.log(artistsData)
-  }
-  
   return (
-    <div>
-        <button onClick={topTracks}>Get Tracks</button>
-        <br />
-        <button onClick={topArtists}>Get Artists</button>
-        <br />        
-        <button onClick={handleLogout}>Logout</button>
-        <br />
-        <button onClick={handlePrint}>Print</button>
+    <Layout>
+      <Data>
+        <div className='hero'>
+          <div className='shadow purple'></div>
+          <div className='shadow red'></div>
+          <div className='shadow blue'></div>
 
-        <div>
-          {artistsData.map((artist, index) => (
-            <ArtistCard
-              key={index}
-              imageSrc={artist.image[0].url} 
-              artistName={artist.name}
-              position={artist.position}
-            />
-          ))}
+          <div className='main-auth-container'>
+            <header className='landing-header'>
+              <h1 onClick={handleLogo} className='logo'><span className='green-text'>Spotify</span>Stats</h1>
+              <div className='positioning-div'>
+                <h2>Account</h2>
+                <h2>Settings</h2>
+                <div className='auth-button'>
+                  <h2>My Profile</h2>
+                </div>
+              </div>
+            </header>
+
+            <div className='main-stats-container'>
+              <div className='label-container'>
+                <h1 className='username focus'>{username}</h1>
+                <div className='positioning-div'>
+                  <h1>Summary
+                    <div className='bottom-green-border'></div>
+                  </h1>
+                  <h1>Songs</h1>
+                  <h1>Artists</h1>
+                  <h1>Albums</h1>
+                  <h1>Genres</h1>
+                </div>
+              </div>
+              <div className='outlined-stats-container'>
+
+              </div>
+            </div>
+          </div>
         </div>
-        <div>
-          {trackData.map((track, index) => (
-            <TrackCard
-              key={index}
-              imageSrc={track.image[0].url}
-              trackName={track.name}
-              artistName={track.artist || 'Unknown'}
-              position={track.position}
-            />
-          ))}
-        </div>
-    </div>
+        {/* <div className='stat-container h-screen w-full bg-[#060F16]'>
+          <div className='header'>
+            <h1 className='logo'>SpotifyStats</h1>
+            <div className='left-container'>
+              <h1>Account</h1>
+              <h1>Settings</h1>
+              <h1>My Profile</h1>
+            </div>
+          </div>
+        </div> */}
+      </Data>
+    </Layout>
   );
 }
 

@@ -21,19 +21,53 @@ function LandingPage() {
 
   return (
     <section>
-      <div className='w-screen h-screen bg-background'>
-        <header className='w-full h-10 border-b border-white'>
-        <header className='w-85 h-full flex flex-row justify-between items-center mx-auto'>
-          <div className=''>
-            <h1 className='text-text text-4xl font-sans font-bold'>
-              <span className='text-main'>Spotify</span>Stats
-            </h1>
+      <div className='hero overflow'>
+        <div className='purple shadow'></div>
+        <div className='blue shadow'></div>
+        <div className='red shadow'></div>
+
+        <div className='main-landing-container'>
+          <header className='landing-header'>
+            <h1 className='logo'><span className='green-text'>Spotify</span>Stats</h1>
+            <div onClick={handleClick} className='cta-button'>
+              <h1>Sign in with Spotify</h1>
+            </div>
+          </header>
+          <div className='left-container'>
+            <div className='empty-spacing-div'></div>
+            <div className='middle-div'>
+              <h1 className='heading focus'>
+                Unlock your Detailed and Personal Spotify Stats
+              </h1>
+              <h2 className='focus'>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis imperdiet velit orci, ac imperdiet nibh tincidunt non. Aliquam ullamcorper felis maximus orci congue fermentum et eget eros. 
+              </h2>
+              <div onClick={handleClick} className='cta-button centered-button focus'>
+                <h1>Sign in with Spotify</h1>
+              </div>
+            </div>
+            <div className='notice'>
+              <h3>
+                I accept that data is gathered  in accordance to the Privacy Policy
+              </h3>
+            </div>
           </div>
-          <div className='bg-main p-3 rounded-xl'>
-            <h1 className='text-text text-2xl font-sans font-normal' onClick={handleClick}>Sign in with Spotify</h1>
+          <div className='right-container'>
+            <div className='card3D focus'>
+              <div className='card-image-container'>
+                <img className='left-image'></img>
+                <img className='middle-image'></img>
+                <img className='right-image'></img>
+              </div>
+              <div className='card-body-container'>
+                <div className='card-song-label'></div>
+                <div className='card-song-label'></div>
+                <div className='card-song-label'></div>
+                <div className='card-song-label'></div>
+              </div>
+            </div>
           </div>
-        </header>
-        </header>
+        </div>
       </div>
     </section>
   );

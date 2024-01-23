@@ -133,23 +133,56 @@ app.get('/top-artists', csrfProtection, async (req, res) => {
 app.get('/token_valid', csrfProtection, async (req, res) => {
   const me_url = 'https://api.spotify.com/v1/me';
   const access_token = req.query.access_token;
-  const isValid = false;
+  let isValid = false;
+
   try {
     const response = await axios.get(me_url, {
       headers: {
         'Authorization': `Bearer ${access_token}`
       }
-    })
+    });
+
     if (response.status === 200) {
       isValid = true;
-      res.json(isValid)
+      res.json( {"valid": isValid} );
+    }
+  } catch (error) {
+    console.error("Error in Axios request:", error);
+
+    // Check if the error is due to an invalid access token
+    if (error.response && error.response.status === 401) {
+      res.json( {"valid": isValid} ); // Access token is invalid
     } else {
-      res.json(isValid)
+      res.status(500).send("Internal Server Error");
     }
   }
-  catch(error)  {
-    console.error("Error in Axios request:", error);
-    res.status(500).send("Internal Server Error");
+});
+
+
+app.get('/refresh_token', async (req, res) => {
+  const refreshToken = req.query.refresh_token;
+  try {
+    const response = await axios({
+      method: 'post',
+      url: 'https://accounts.spotify.com/api/token',
+      params: {
+        grant_type: 'refresh_token',
+        refresh_token: refreshToken,
+      },
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      auth: {
+        username: CLIENT_ID,
+        password: CLIENT_SECRET,
+      },
+    });
+
+    const accessToken = response.data.access_token;
+    res.json([ { access_token: accessToken } ]);
+  } catch (error) {
+    console.error('Error refreshing token:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 

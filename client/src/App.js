@@ -8,7 +8,6 @@ import LandingPage from './pages/landingPage';
 import React, { useState } from 'react';
 import MyContext from './myContext';
 import AuthorizedPage from './pages/authorizedPage';
-import Example from './pages/test';
 
 function App() {
   const [accessToken, setAccessToken] = useState('Initial value');
@@ -20,7 +19,6 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/dashboard" element={<AuthorizedPage />} />
-            <Route path="/test" element={<Example/>} /> 
           </Routes>
         </div>
         </MyContext.Provider> 
