@@ -7,7 +7,7 @@ function LandingPage() {
   async function handleClick() {
     if (localStorage.getItem("access_token")) {
       console.log("access_token found redirecting to dashboard")
-      navigate('dashboard')
+      navigate('/dashboard')
     }
     else {
       fetch('http://localhost:5000/login')
