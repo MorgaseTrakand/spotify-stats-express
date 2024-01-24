@@ -11,22 +11,24 @@ const DataWrapper = ({ children }) => {
   const [trackData, setTrackData] = useState([]);
 
   useEffect(() => {
-    if (!localStorage.getItem("access_token")) {
-      noAccessToken()
+    if (localStorage.getItem("access_token")) {
+      hasAccessToken();
     }
     else {
-      hasAccessToken();
+      noAccessToken()();
     }
   }, []);
 
 
   function hasAccessToken() {
+    console.log("has access token in data.js")
     const access_token = localStorage.getItem("access_token")
     const refresh_token = localStorage.getItem("refresh_token")
 
     topArtists(access_token, 10)
     topTracks(access_token, 10)
   }
+  
   function noAccessToken() {
     const queryString = window.location.search; // Gets the query string (?param1=value1&param2=value2)
     const params = new URLSearchParams(queryString);
