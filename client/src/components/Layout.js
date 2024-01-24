@@ -20,8 +20,7 @@ const Layout = ({ children }) => {
   }, [navigate]);
 
 
-  const refreshToken = useCallback(async () => {
-    const refresh_token = localStorage.getItem("refresh_token");
+  const refreshToken = useCallback(async (refresh_token) => {
     console.log("refresh token:" + refresh_token)
 
     try {
@@ -33,22 +32,25 @@ const Layout = ({ children }) => {
   
       const responseData = await response.json();
       localStorage.setItem('access_token', responseData.access_token);
+      console.log("successfully refreshed token")
     } catch (error) {
+      console.log(error)
       console.log("did not refresh")
       logout();
     }  }, [logout]);
 
 
-  const validate = useCallback(async () => {
+  const validate = useCallback(async (access_token) => {
     try {
       console.log("entering validate function")
-      const access_token = localStorage.getItem("access_token");
+      console.log("validate checking "+access_token)
 
       const response = await fetch(`http://localhost:5000/token_valid?access_token=${access_token}`);
       const data = await response.json();
       const trueOrFalse = data.valid;
 
       if (trueOrFalse) {
+        console.log("token validated")
         return true;
       } else {
         await refreshToken(navigate);
@@ -63,11 +65,13 @@ const Layout = ({ children }) => {
 
   useEffect(() => {
     const handleValidation = async () => {
-      if (localStorage.getItem("access_token")) {
-        console.log("has access_token")
-        if (await validate()) {
+      const AT = localStorage.getItem("access_token");
+      const RT = localStorage.getItem("refresh_token");
+      if (AT) {
+        console.log("has access_token: "+AT)
+        if (await validate(AT)) {
         } else {
-          await refreshToken();
+          await refreshToken(RT);
         }
       } else {
         logout();

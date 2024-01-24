@@ -16,6 +16,8 @@ const DataWrapper = ({ children }) => {
   const refresh_token = params.get('refresh_token');
   localStorage.setItem('access_token', access_token);
   localStorage.setItem('refresh_token', refresh_token)
+  const test = localStorage.getItem("access_token")
+  console.log("(In data.js) test: " + test)
   const limit = 10;
   const navigate = useNavigate();
 

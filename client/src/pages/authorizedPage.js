@@ -40,31 +40,25 @@ function AuthorizedPage() {
               <div className='label-container'>
                 <h1 className='username focus'>{username}</h1>
                 <div className='positioning-div'>
-                  <h1>Summary
+                  <h1 className='focus'>
+                    Summary
                     <div className='bottom-green-border'></div>
                   </h1>
-                  <h1>Songs</h1>
-                  <h1>Artists</h1>
-                  <h1>Albums</h1>
-                  <h1>Genres</h1>
+                  <h1 className='focus'>Songs</h1>
+                  <h1 className='focus'>Artists</h1>
+                  <h1 className='focus'>Albums</h1>
+                  <h1 className='focus'>Genres</h1>
                 </div>
               </div>
-              <div className='outlined-stats-container'>
 
+              <div className='outlined-stats-container'>
+                <div className='glassmorphism-test'>
+
+                </div>
               </div>
             </div>
           </div>
         </div>
-        {/* <div className='stat-container h-screen w-full bg-[#060F16]'>
-          <div className='header'>
-            <h1 className='logo'>SpotifyStats</h1>
-            <div className='left-container'>
-              <h1>Account</h1>
-              <h1>Settings</h1>
-              <h1>My Profile</h1>
-            </div>
-          </div>
-        </div> */}
       </Data>
     </Layout>
   );

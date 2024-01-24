@@ -1,21 +1,29 @@
 import '../App.css';
+import { useNavigate } from 'react-router-dom';
 
 function LandingPage() {
+  const navigate = useNavigate();
 
   async function handleClick() {
-    fetch('http://localhost:5000/login')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(data => {
-      window.location.href = data.authUrl;
-    })
-    .catch(error => {
-      console.error('Fetch error:', error);
-    });
+    if (localStorage.getItem("access_token")) {
+      console.log("access_token found redirecting to dashboard")
+      navigate('dashboard')
+    }
+    else {
+      fetch('http://localhost:5000/login')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        window.location.href = data.authUrl;
+      })
+      .catch(error => {
+        console.error('Fetch error:', error);
+      });
+    }
   }
 
 
@@ -53,7 +61,7 @@ function LandingPage() {
             </div>
           </div>
           <div className='right-container'>
-            <div className='card3D focus'>
+            <div className='card3D'>
               <div className='card-image-container'>
                 <img className='left-image'></img>
                 <img className='middle-image'></img>
