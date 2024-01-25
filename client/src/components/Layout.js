@@ -53,7 +53,6 @@ const Layout = ({ children }) => {
         console.log("token validated")
         return true;
       } else {
-        await refreshToken(navigate);
         return false;
       }
     } catch (error) {
