@@ -6,7 +6,7 @@ import {
 import './App.css';
 import LandingPage from './pages/landingPage';
 import React, { useState } from 'react';
-import MyContext from './myContext';
+import { DataProvider } from './DataContext';
 import AuthorizedPage from './pages/authorizedPage';
 
 function App() {
@@ -14,14 +14,14 @@ function App() {
 
   return (
     <Router>
-      <MyContext.Provider value={{ accessToken, setAccessToken }}>
+      <DataProvider>
         <div>
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/dashboard" element={<AuthorizedPage />} />
           </Routes>
         </div>
-        </MyContext.Provider> 
+        </DataProvider>
     </Router>
   );
 }

@@ -238,3 +238,29 @@
   margin-top: 2vh;
   margin-left: 1.5%;
 }
+
+.topArtists-container {
+  width: 47.5%;
+  min-height: 30vh;
+}
+.topArtists {
+  width: 100%;
+  min-height: 30vh;
+  height: auto;
+  background-color: #16232d;
+  border-radius: 12px;
+}
+.topArtists-container h1 {
+  font-family: "Open Sans";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  margin-bottom: 0.5vh;
+}
+.dashboard-flexbox-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1.5%;
+  margin-top: 8vh;
+}

@@ -1,5 +1,5 @@
 import { useEffect, useCallback, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useDataContext } from '../DataContext';
 
 
 /* This function will serve as a higher-order component (HOC) that will wrap any page that requires the gathering of data
@@ -7,8 +7,9 @@ import { useNavigate } from 'react-router-dom';
 it basically saves the page.js files from clutter so that the focus for those files can be UI only
 */ 
 const DataWrapper = ({ children }) => {
-  const [artistsData, setArtistsData] = useState([]);
-  const [trackData, setTrackData] = useState([]);
+  // const [artistsData, setArtistsData] = useState([]);
+  // const [trackData, setTrackData] = useState([]);
+  const { setArtistsData, setTrackData } = useDataContext();
 
   useEffect(() => {
     if (localStorage.getItem("access_token")) {
