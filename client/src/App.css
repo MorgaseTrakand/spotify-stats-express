@@ -25,15 +25,16 @@
 }
 .shadow {
   height: 1500px;
+  height: calc(150% + 2vh);
   width: 700px;
+  width: calc(60% + 2vw) ;
   position: absolute;
-  border-radius: 50 0px;
   filter: blur(300px);
   z-index: 0;
 }
 .red {
   background: rgba(213, 50, 50, 0.3);
-  bottom: -130vh;
+  bottom: -135vh;
   right: -15vh;
 }
 .blue {
@@ -43,7 +44,7 @@
 }
 .purple {
   background: rgba(190, 54, 254, 0.3);
-  bottom: -150vh;
+  bottom: -140vh;
   left: -15vh;
 }
 

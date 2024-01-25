@@ -15,7 +15,7 @@ const DataWrapper = ({ children }) => {
       hasAccessToken();
     }
     else {
-      noAccessToken()();
+      noAccessToken();
     }
   }, []);
 
@@ -40,8 +40,9 @@ const DataWrapper = ({ children }) => {
     console.log("(In data.js) test: " + test)
 
     topArtists(access_token, 10);
-    topTracks(access_token, 10);
+    topTracks(access_token, 10); 
   }
+
   function topArtists(access_token, limit) {
     fetch(`http://localhost:5000/top-artists?access_token=${access_token}&limit=${limit}`)
     .then(response => {
