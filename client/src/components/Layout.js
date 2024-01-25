@@ -31,8 +31,16 @@ const Layout = ({ children }) => {
       }
   
       const responseData = await response.json();
-      localStorage.setItem('access_token', responseData.access_token);
-      console.log("successfully refreshed token")
+
+      console.log("response data" +responseData.access_token)
+      if (responseData.access_token == undefined) {
+        console.log("refresh failed")
+        logout();
+      }
+      else {
+        localStorage.setItem('access_token', responseData.access_token);
+        console.log("successfully refreshed token")
+      }
     } catch (error) {
       console.log(error)
       console.log("did not refresh")

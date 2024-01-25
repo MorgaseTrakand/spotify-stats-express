@@ -177,7 +177,7 @@ app.get('/refresh_token', async (req, res) => {
         password: CLIENT_SECRET,
       },
     });
-
+    
     const accessToken = response.data.access_token;
     res.json([ { access_token: accessToken } ]);
   } catch (error) {
