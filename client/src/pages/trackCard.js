@@ -3,10 +3,14 @@ import './trackCard.css'; // Add this line
 
 const TrackCard = ({ imageSrc, trackName, artistName, position }) => (
   <div className="track-card">
-    <img src={imageSrc} alt={`Song ${trackName}`} />
-    <h3>{trackName}</h3>
-    <h3>{artistName}</h3>
     <p>{position}</p>
+    <div className='track-card-container'>
+      <img src={imageSrc} alt={`Song ${trackName}`} />
+      <div className='track-card-name-container'>
+        <h2>{trackName}</h2>
+        <h3>{artistName}</h3>
+      </div>
+    </div>
   </div>
 );
 

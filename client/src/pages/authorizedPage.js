@@ -1,5 +1,4 @@
 import '../App.css';
-import './dashboard.css'
 import React, { useState } from 'react';
 import ArtistCard from './artistCard';
 import TrackCard from './trackCard';
@@ -23,8 +22,8 @@ function AuthorizedPage() {
     <Layout>
       <Data>
         <div className='hero'>
-          <div className='shadow purple'></div>
-          <div className='shadow red'></div>
+          {/* <div className='shadow purple'></div>
+          <div className='shadow red'></div> */}
           <div className='shadow blue'></div>
 
           <div className='main-auth-container'>

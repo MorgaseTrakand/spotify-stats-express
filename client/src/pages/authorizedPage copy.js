@@ -1,5 +1,4 @@
 import '../App.css';
-import './dashboard.css'
 import React, { useState } from 'react';
 import { logout } from "./utils";
 import ArtistCard from './artistCard';

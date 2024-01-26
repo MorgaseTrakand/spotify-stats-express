@@ -1,14 +1,48 @@
 /* ArtistCard.css */
 
 .track-card {
-    border: 1px solid #ddd;
-    padding: 16px;
-    margin: 8px;
-    text-align: center;
-  }
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  height: 140px;
+}
   
-  .track-card img {
-    max-width: 100px;
-    height: auto;
-  }
+.track-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    margin: 0 1.5vh;
+}
+
+.track-card p {
+  color: rgba(255, 255, 255, 0.50);
+  font-family: "Open Sans";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  margin-left: 2vh;
+}
   
+.track-card-container {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.track-card-name-container h2 {
+  font-family: "Open Sans";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+
+.track-card-name-container h3 {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.60);
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}

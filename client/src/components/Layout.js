@@ -13,6 +13,22 @@ if token does not exist => logout => reroute to landing page
 const Layout = ({ children }) => {
   const navigate = useNavigate();
 
+  async function handleFailedRefresh() {
+    fetch('http://localhost:5000/login')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      window.location.href = data.authUrl;
+    })
+    .catch(error => {
+      console.error('Fetch error:', error);
+    });
+  }
+
   const logout = useCallback(() => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
@@ -35,7 +51,9 @@ const Layout = ({ children }) => {
       console.log("response data" +responseData.access_token)
       if (responseData.access_token == undefined) {
         console.log("refresh failed")
-        logout();
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        handleFailedRefresh();
       }
       else {
         localStorage.setItem('access_token', responseData.access_token);
