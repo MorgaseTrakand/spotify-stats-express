@@ -1,22 +1,27 @@
 import '../App.css';
 import React, { useState } from 'react';
-import ArtistCard from './artistCard';
-import TrackCard from './trackCard';
 import Layout from '../components/Layout'
 import Data from '../components/Data'
 import '../App.css';
 import { useNavigate } from 'react-router-dom';
 import { useDataContext } from '../DataContext';
+import SummaryComponent from '../components/dashboardStatsComponents/SummaryComponent';
 
 
 function AuthorizedPage() {
   const { artistsData, trackData } = useDataContext();
+  const [renderSwitch, setRenderSwitch] = useState(1)
+
+  function handleLabelClick(label) {
+    setRenderSwitch(label)
+  }
 
   var username = "Morgase";
   const navigate = useNavigate();
   function handleLogo() {
     navigate('/');
   }
+
 
   return (
     <Layout>
@@ -42,18 +47,31 @@ function AuthorizedPage() {
               <div className='label-container'>
                 <h1 className='username focus'>{username}</h1>
                 <div className='positioning-div'>
-                  <h1 className='focus'>
+                  <h1 className='focus' onClick={() => handleLabelClick(1)}>
                     Summary
                     <div className='bottom-green-border'></div>
                   </h1>
-                  <h1 className='focus'>Songs</h1>
-                  <h1 className='focus'>Artists</h1>
-                  <h1 className='focus'>Albums</h1>
-                  <h1 className='focus'>Genres</h1>
+                  <h1 className='focus' onClick={() => handleLabelClick(2)}>Songs</h1>
+                  <h1 className='focus' onClick={() => handleLabelClick(3)}>Artists</h1>
+                  <h1 className='focus' onClick={() => handleLabelClick(4)}>Albums</h1>
+                  <h1 className='focus' onClick={() => handleLabelClick(5)}>Genres</h1>
                 </div>
               </div>
 
               <div className='outlined-stats-container'>
+                {renderSwitch === 1 ? (
+                  <SummaryComponent trackData={trackData} artistsData={artistsData} />
+                ) : renderSwitch === 2 ? (
+                  <SummaryComponent trackData={trackData} artistsData={artistsData} />
+                ) : renderSwitch === 3 ? (
+                  <SummaryComponent trackData={trackData} artistsData={artistsData} />
+                ) : renderSwitch === 4 ? (
+                  <SummaryComponent trackData={trackData} artistsData={artistsData} />
+                ) : (
+                  <SummaryComponent trackData={trackData} artistsData={artistsData} />
+                )}
+              </div>
+              {/* <div className='outlined-stats-container'>
                 <div className='glassmorphism-test'>
 
                 </div>
@@ -88,7 +106,7 @@ function AuthorizedPage() {
                   </div>
                 </div>
       
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
