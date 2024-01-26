@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import UnverifiedHeader from "./UnverifiedHeader";
 
 function UnverifiedComponent() {
     const navigate = useNavigate();
@@ -33,12 +34,7 @@ function UnverifiedComponent() {
           <div className='red shadow'></div>
   
           <div className='main-landing-container'>
-            <header className='landing-header'>
-              <h1 className='logo'><span className='green-text'>Spotify</span>Stats</h1>
-              <div onClick={handleClick} className='cta-button'>
-                <h1>Sign in with Spotify</h1>
-              </div>
-            </header>
+            <UnverifiedHeader handleClick={handleClick}/>
             <div className='left-container'>
               <div className='empty-spacing-div'></div>
               <div className='middle-div'>

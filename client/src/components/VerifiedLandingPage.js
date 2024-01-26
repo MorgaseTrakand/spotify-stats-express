@@ -1,5 +1,6 @@
 
 import { useNavigate } from "react-router-dom";
+import VerifiedHeader from "./VerifiedHeader";
 
 function VerifiedComponent() {
     const navigate = useNavigate();
@@ -34,12 +35,7 @@ function VerifiedComponent() {
           <div className='red shadow'></div>
   
           <div className='main-landing-container'>
-            <header className='landing-header'>
-              <h1 className='logo'><span className='green-text'>Spotify</span>Stats</h1>
-              <div onClick={handleClick} className='cta-button'>
-                <h1>Profile</h1>
-              </div>
-            </header>
+            <VerifiedHeader handleClick={handleClick}/>
             <div className='left-container'>
               <div className='empty-spacing-div'></div>
               <div className='middle-div'>

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import '../App.css';
-import { useNavigate } from 'react-router-dom';
 import VerifiedComponent from '../components/VerifiedLandingPage';
 import UnverifiedComponent from '../components/UnverifiedLandingPage';
 
