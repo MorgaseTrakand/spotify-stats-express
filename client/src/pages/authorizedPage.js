@@ -12,10 +12,32 @@ import SongsComponent from '../components/dashboardStatsComponents/SongsComponen
 function AuthorizedPage() {
   const { artistsData, trackData } = useDataContext();
   const [renderSwitch, setRenderSwitch] = useState(1);
-
+  const [labelVisibility, setLabelVisibility] = useState({
+    1: true,
+    2: false,
+    3: false,
+    4: false,
+    5: false,
+  });
 
   function handleLabelClick(label) {
     setRenderSwitch(label)
+    setLabelVisibility({
+      1: false,
+      2: false,
+      3: false,
+      4: false,
+      5: false
+    })
+    setLabelVisibility({ [label]: true });
+  }
+
+  const getLabelName = {
+    1: "Summary",
+    2: "Songs",
+    3: "Artists",
+    4: "Albums",
+    5: "Genres"
   }
 
   var username = "Morgase";
@@ -53,14 +75,16 @@ function AuthorizedPage() {
               <div className='label-container'>
                 <h1 className='username focus'>{username}</h1>
                 <div className='positioning-div'>
-                  <h1 className='focus' onClick={() => handleLabelClick(1)}>
-                    Summary
-                    <div className='bottom-green-border'></div>
-                  </h1>
-                  <h1 className='focus' onClick={() => handleLabelClick(2)}>Songs</h1>
-                  <h1 className='focus' onClick={() => handleLabelClick(3)}>Artists</h1>
-                  <h1 className='focus' onClick={() => handleLabelClick(4)}>Albums</h1>
-                  <h1 className='focus' onClick={() => handleLabelClick(5)}>Genres</h1>
+                  {[1, 2, 3, 4, 5].map((label) => (
+                    <h1
+                      key={label}
+                      className={`focus`}
+                      onClick={() => handleLabelClick(label)}
+                    >
+                      {getLabelName[label]}
+                      <div className={`bottom-green-border ${labelVisibility[label] ? '' : 'hidden'}`}></div>
+                    </h1>
+                  ))}
                 </div>
               </div>
 
