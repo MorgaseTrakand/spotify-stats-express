@@ -23,6 +23,9 @@ function AuthorizedPage() {
   function handleLogo() {
     navigate('/');
   }
+  useEffect(() => {
+    console.log("")
+  })
 
 
 
