@@ -8,6 +8,7 @@ import LandingPage from './pages/landingPage';
 import React, { useState } from 'react';
 import { DataProvider } from './DataContext';
 import AuthorizedPage from './pages/authorizedPage';
+import ArtistPage from './pages/artistPage';
 
 function App() {
   const [accessToken, setAccessToken] = useState('Initial value');
@@ -19,9 +20,10 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/dashboard" element={<AuthorizedPage />} />
+            <Route path="/artist" element={<ArtistPage />}></Route>
           </Routes>
         </div>
-        </DataProvider>
+      </DataProvider>
     </Router>
   );
 }
