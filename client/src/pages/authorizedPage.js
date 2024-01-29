@@ -78,7 +78,7 @@ function AuthorizedPage() {
                   {[1, 2, 3, 4, 5].map((label) => (
                     <h1
                       key={label}
-                      className={`focus`}
+                      className={`focus  ${labelVisibility[label] ? 'no-after' : ''}`}
                       onClick={() => handleLabelClick(label)}
                     >
                       {getLabelName[label]}
