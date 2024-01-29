@@ -92,7 +92,8 @@ app.get('/top-tracks', csrfProtection, async (req, res) => {
         position: index + 1,
         name: track.name,
         artist: track.artists[0].name,
-        image: track.album.images
+        image: track.album.images,
+        id: track.id
       }));
       console.log(topTracks)
       res.json(topTracks);
@@ -109,7 +110,7 @@ app.get('/top-artists', csrfProtection, async (req, res) => {
   const limit = req.query.limit;
 
   // Get user's top tracks from Spotify API
-  const response = await axios.get('https://api.spotify.com/v1/me/top/artists?&limit='+limit, {
+  await axios.get('https://api.spotify.com/v1/me/top/artists?&limit='+limit, {
     headers: {
       'Authorization': `Bearer ${access_token}`
     }
@@ -119,7 +120,8 @@ app.get('/top-artists', csrfProtection, async (req, res) => {
     const topArtists = response.data.items.map((artist, index) => ({
       position: index + 1,
       name: artist.name,
-      image: artist.images
+      image: artist.images,
+      id: artist.id
     }));
     res.json(topArtists);
   })

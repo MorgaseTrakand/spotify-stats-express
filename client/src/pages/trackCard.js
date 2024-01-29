@@ -1,7 +1,7 @@
 import React from 'react';
 import './trackCard.css'; // Add this line
 
-const TrackCard = ({ imageSrc, trackName, artistName, position }) => (
+const TrackCard = ({ imageSrc, trackName, artistName, position, id }) => (
   <div className="track-card">
     <p>{position}</p>
     <div className='track-card-container'>

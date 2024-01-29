@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './artistCard.css'; // Add this line
 
-const ArtistCard = ({ imageSrc, artistName, position }) => (
-  <div className="artist-card">
-    <p>{position}</p>
-    <img src={imageSrc} alt={`Artist ${artistName}`} />
-    <h3>{artistName}</h3>
-  </div>
-);
+const ArtistCard = ({ imageSrc, artistName, position, id }) => {
+  const artistCode = id;
+  const handleArtistRedirect = () => {
+    window.open(`https://open.spotify.com/artist/${artistCode}`, '_blank');
+  };
+  
+  return (
+    <div className="artist-card">
+      <p>{position}</p>
+      <img onClick={handleArtistRedirect} src={imageSrc} alt={`Artist ${artistName}`} />
+      <h3 onClick={handleArtistRedirect}>{artistName}</h3>
+    </div>
+  );
+};
 
 export default ArtistCard;

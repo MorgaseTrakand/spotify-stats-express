@@ -7,9 +7,8 @@ import { useDataContext } from '../DataContext';
 it basically saves the page.js files from clutter so that the focus for those files can be UI only
 */ 
 const DataWrapper = ({ children }) => {
-  // const [artistsData, setArtistsData] = useState([]);
-  // const [trackData, setTrackData] = useState([]);
   const { setArtistsData, setTrackData } = useDataContext();
+  const { artistsData, trackData } = useDataContext();
 
   useEffect(() => {
     if (localStorage.getItem("access_token")) {
@@ -54,7 +53,7 @@ const DataWrapper = ({ children }) => {
     })
     .then(data => {
       console.log(data);      
-      setArtistsData(data)  
+      setArtistsData(data)
     })
     .catch(error => {
       console.error('Fetch error:', error);

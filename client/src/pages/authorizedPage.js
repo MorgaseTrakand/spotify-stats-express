@@ -1,5 +1,5 @@
 import '../App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout'
 import Data from '../components/Data'
 import '../App.css';
@@ -11,7 +11,8 @@ import SongsComponent from '../components/dashboardStatsComponents/SongsComponen
 
 function AuthorizedPage() {
   const { artistsData, trackData } = useDataContext();
-  const [renderSwitch, setRenderSwitch] = useState(1)
+  const [renderSwitch, setRenderSwitch] = useState(1);
+
 
   function handleLabelClick(label) {
     setRenderSwitch(label)
@@ -22,6 +23,7 @@ function AuthorizedPage() {
   function handleLogo() {
     navigate('/');
   }
+
 
 
   return (
@@ -61,7 +63,7 @@ function AuthorizedPage() {
 
               <div className='outlined-stats-container'>
                 {renderSwitch === 1 ? (
-                  <SummaryComponent trackData={trackData} artistsData={artistsData} />
+                  <SummaryComponent trackData={trackData} artistsData={artistsData}/>
                 ) : renderSwitch === 2 ? (
                   <SongsComponent trackData={trackData} />
                 ) : renderSwitch === 3 ? (
