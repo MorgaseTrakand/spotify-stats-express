@@ -19,6 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/dashboard" element={<AuthorizedPage />} />
+            <Route path="/account" element={<AccountPage />} />
           </Routes>
         </div>
         </DataProvider>
