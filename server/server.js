@@ -43,7 +43,6 @@ app.get('/login', (req, res) => {
         +"&scope=user-read-private user-read-email user-top-read user-read-recently-played&state="+csrfToken
     )
     res.json( {"authUrl": authorize_url} )
-    //res.redirect(authorize_url);
 })
 
 app.get('/callback', csrfProtection, async (req, res) => {
@@ -83,7 +82,7 @@ app.get('/top-tracks', csrfProtection, async (req, res) => {
     const limit = req.query.limit;
 
     // Get user's top tracks from Spotify API
-    const response = await axios.get('https://api.spotify.com/v1/me/top/tracks?&limit='+limit, {
+    await axios.get('https://api.spotify.com/v1/me/top/tracks?&limit='+limit, {
       headers: {
         'Authorization': `Bearer ${access_token}`
       }
@@ -95,7 +94,9 @@ app.get('/top-tracks', csrfProtection, async (req, res) => {
         name: track.name,
         artist: track.artists[0].name,
         image: track.album.images,
-        id: track.id
+        id: track.id,
+        genres: track.genres,
+        popularity: track.popularity
       }));
       console.log(topTracks)
       res.json(topTracks);

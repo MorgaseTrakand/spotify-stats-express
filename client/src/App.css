@@ -147,12 +147,17 @@
   margin-left: 2vh;
   height: 480px;
   width: 433px;
-  background-color: #141B1F;  
+  background-color: #141B1F; 
+  background-color: black; 
+  background-color: #060F16;
+  transition: 0.5s;
   border-radius: 12px;
-  transform: rotateX(30deg);
+  transform-style: preserve-3d;
+}
+.card3D:hover {
+  transform: rotateX(10deg);
   transform: rotateY(10deg);
   transform: rotateZ(1deg);
-  transform-style: preserve-3d;
 }
 .card-image-container {
   height: 35%;
@@ -282,20 +287,36 @@
   padding: 0 1.5%;
   margin-top: 8vh;
 }
-.image-carosel {
+.image-carosel, .landing-image-carosel {
   height: 35vh;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.image-carosel img {
+.landing-image-carosel {
+  height: 180px;
+  background-color: black;
+  background-color: #060F16;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+.image-carosel img, .landing-image-carosel img {
   border-radius: 12px;
 }
 .first-image {
   height: 180px;
   width: 180px;
   z-index: 5;
+}
+.landing-first-image {
+  height: 140px;
+  width: 140px;
+}
+.landing-second-image, .landing-third-image {
+  height: 120px;
+  width: 120px;
+  margin: 0 -2.5vh;
 }
 .second-image, .third-image {
   height: 162px;

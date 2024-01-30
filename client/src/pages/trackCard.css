@@ -1,13 +1,20 @@
 /* ArtistCard.css */
 
-.track-card {
+.track-card, .landing-track-card {
   display: flex;
   justify-content: start;
   align-items: center;
   height: 100px;
 }
-  
-.track-card img {
+.landing-track-card {
+  height: 90px;
+  background-color: black;
+  background-color: #060F16;
+}
+.landing-track-card p {
+  margin-left: 2vh;
+}
+.track-card img, .landing-track-card img {
     width: 70px;
     height: 70px;
     border-radius: 8px;

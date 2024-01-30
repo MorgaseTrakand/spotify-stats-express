@@ -1,9 +1,51 @@
 
 import { useNavigate } from "react-router-dom";
 import VerifiedHeader from "./VerifiedHeader";
+import { useEffect } from "react";
 
 function VerifiedComponent() {
     const navigate = useNavigate();
+
+    useEffect(() => {
+      const card = document.querySelector('.card3D');
+  
+      const handleMouseLeave = () => {
+        card.style.transform = 'rotateX(0deg) rotateY(0deg) translateZ(25px)';
+      };
+  
+      // Attach event listeners when the component mounts
+      card.addEventListener('mousemove', (e) => {
+        const cardRect = card.getBoundingClientRect();
+        const height = cardRect.height; // largest x-coordinate
+        const width = cardRect.width; // largest y-coordinate
+      
+        const mouseX = e.pageX
+        const mouseY = e.pageY
+
+        const YValue = ((cardRect.top - mouseY) + (height / 2))
+        const XValue = ((cardRect.left - mouseX) + (width / 2)) * -1
+
+        console.log("Y:"+YValue)
+        console.log("X:"+XValue)
+
+        if (XValue > 0 && YValue > 0) {
+          card.style.transform = `rotateY(${-(YValue/20)}deg) rotateX(${(XValue/20)}deg) translateZ(25px)`;
+        }
+        if (XValue < 0 && YValue < 0) {
+          card.style.transform = `rotateY(${YValue/20}deg) rotateX(${XValue/20}deg) translateZ(25px)`;
+        }
+        else {
+          card.style.transform = `rotateY(${-(YValue/20)}deg) rotateX(${-(XValue/20)}deg) translateZ(25px)`;
+        }
+      });
+      card.addEventListener('mouseleave', handleMouseLeave);
+  
+      // Clean up the event listeners when the component unmounts
+      return () => {
+        card.removeEventListener('mousemove');
+        card.removeEventListener('mouseleave', handleMouseLeave);
+      };
+    }, []);
   
     async function handleClick() {
       if (localStorage.getItem("access_token")) {
@@ -57,17 +99,44 @@ function VerifiedComponent() {
             </div>
             <div className='right-container'>
               <div className='card3D'>
-                <div className='card-image-container'>
-                  <img className='left-image'></img>
-                  <img className='middle-image'></img>
-                  <img className='right-image'></img>
-                </div>
-                <div className='card-body-container'>
-                  <div className='card-song-label'></div>
-                  <div className='card-song-label'></div>
-                  <div className='card-song-label'></div>
-                  <div className='card-song-label'></div>
-                </div>
+                <div className="shadow blue"></div>
+                  <div className='topArtists'>
+                    <div className='landing-image-carosel'>
+                      <img className='landing-second-image' src='https://i.scdn.co/image/ab67616d0000b273b7bea3d01f04e6d0408d2afe'></img>
+                      <img className='landing-first-image' src='https://i.scdn.co/image/ab67616d0000b273b7bea3d01f04e6d0408d2afe'></img>
+                      <img className='landing-second-image' src='https://i.scdn.co/image/ab67616d0000b273b7bea3d01f04e6d0408d2afe'></img>
+                    </div>
+                    <div className="landing-track-card">
+                      <p>1</p>
+                      <div className='track-card-container'>
+                        <img src='https://i.scdn.co/image/ab67616d0000b273b7bea3d01f04e6d0408d2afe' />
+                        <div className='track-card-name-container'>
+                          <h2>With or Without You</h2>
+                          <h3>U2</h3>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="landing-track-card">
+                      <p>2</p>
+                      <div className='track-card-container'>
+                        <img src='https://i.scdn.co/image/ab67616d0000b273b7bea3d01f04e6d0408d2afe' />
+                        <div className='track-card-name-container'>
+                          <h2>With or Without You</h2>
+                          <h3>U2</h3>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="landing-track-card">
+                      <p>3</p>
+                      <div className='track-card-container'>
+                        <img src='https://i.scdn.co/image/ab67616d0000b273b7bea3d01f04e6d0408d2afe' />
+                        <div className='track-card-name-container'>
+                          <h2>With or Without You</h2>
+                          <h3>U2</h3>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
               </div>
             </div>
           </div>
