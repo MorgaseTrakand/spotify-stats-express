@@ -8,6 +8,7 @@ import LandingPage from './pages/landingPage';
 import React, { useState } from 'react';
 import { DataProvider } from './DataContext';
 import AuthorizedPage from './pages/authorizedPage';
+import AccountPage from './pages/AccountPage';
 
 function App() {
   const [accessToken, setAccessToken] = useState('Initial value');

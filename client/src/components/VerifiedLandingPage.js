@@ -6,46 +6,15 @@ import { useEffect } from "react";
 function VerifiedComponent() {
     const navigate = useNavigate();
 
-    useEffect(() => {
-      const card = document.querySelector('.card3D');
-  
-      const handleMouseLeave = () => {
-        card.style.transform = 'rotateX(0deg) rotateY(0deg) translateZ(25px)';
-      };
-  
-      // Attach event listeners when the component mounts
-      card.addEventListener('mousemove', (e) => {
-        const cardRect = card.getBoundingClientRect();
-        const height = cardRect.height; // largest x-coordinate
-        const width = cardRect.width; // largest y-coordinate
-      
-        const mouseX = e.pageX
-        const mouseY = e.pageY
-
-        const YValue = ((cardRect.top - mouseY) + (height / 2))
-        const XValue = ((cardRect.left - mouseX) + (width / 2)) * -1
-
-        console.log("Y:"+YValue)
-        console.log("X:"+XValue)
-
-        if (XValue > 0 && YValue > 0) {
-          card.style.transform = `rotateY(${-(YValue/20)}deg) rotateX(${(XValue/20)}deg) translateZ(25px)`;
-        }
-        if (XValue < 0 && YValue < 0) {
-          card.style.transform = `rotateY(${YValue/20}deg) rotateX(${XValue/20}deg) translateZ(25px)`;
-        }
-        else {
-          card.style.transform = `rotateY(${-(YValue/20)}deg) rotateX(${-(XValue/20)}deg) translateZ(25px)`;
-        }
-      });
-      card.addEventListener('mouseleave', handleMouseLeave);
-  
-      // Clean up the event listeners when the component unmounts
-      return () => {
-        card.removeEventListener('mousemove');
-        card.removeEventListener('mouseleave', handleMouseLeave);
-      };
-    }, []);
+    function handleLogo() {
+      navigate('/');
+    }
+    function handleAccount() {
+      navigate('/account')
+    }
+    function handleSettings() {
+      navigate('/settings')
+    }
   
     async function handleClick() {
       if (localStorage.getItem("access_token")) {
@@ -77,7 +46,7 @@ function VerifiedComponent() {
           <div className='red shadow'></div>
   
           <div className='main-landing-container'>
-            <VerifiedHeader handleClick={handleClick}/>
+            <VerifiedHeader handleLogo={handleLogo} handleAccount={handleAccount} handleSettings={handleSettings}/>
             <div className='left-container'>
               <div className='empty-spacing-div'></div>
               <div className='middle-div'>
@@ -88,7 +57,7 @@ function VerifiedComponent() {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis imperdiet velit orci, ac imperdiet nibh tincidunt non. Aliquam ullamcorper felis maximus orci congue fermentum et eget eros. 
                 </h2>
                 <div onClick={handleClick} className='cta-button centered-button focus'>
-                  <h1>Profile</h1>
+                  <h1>My Profile</h1>
                 </div>
               </div>
               <div className='notice'>

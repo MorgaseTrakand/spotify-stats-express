@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDataContext } from '../DataContext';
 import SummaryComponent from '../components/dashboardStatsComponents/SummaryComponent';
 import SongsComponent from '../components/dashboardStatsComponents/SongsComponent';
+import VerifiedHeader from '../components/VerifiedHeader';
 
 
 function AuthorizedPage() {
@@ -45,10 +46,12 @@ function AuthorizedPage() {
   function handleLogo() {
     navigate('/');
   }
-  useEffect(() => {
-    console.log("")
-  })
-
+  function handleAccount() {
+    navigate('/account')
+  }
+  function handleSettings() {
+    navigate('/settings')
+  }
 
 
   return (
@@ -60,16 +63,8 @@ function AuthorizedPage() {
           <div className='shadow blue'></div>
 
           <div className='main-auth-container'>
-            <header className='landing-header'>
-              <h1 onClick={handleLogo} className='logo'><span className='green-text'>Spotify</span>Stats</h1>
-              <div className='positioning-div'>
-                <h2>Account</h2>
-                <h2>Settings</h2>
-                <div className='auth-button'>
-                  <h2>My Profile</h2>
-                </div>
-              </div>
-            </header>
+          <VerifiedHeader handleLogo={handleLogo} handleAccount={handleAccount} handleSettings={handleSettings}/>
+
 
             <div className='main-stats-container'>
               <div className='label-container'>
