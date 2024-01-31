@@ -56,17 +56,44 @@ function UnverifiedComponent() {
             </div>
             <div className='right-container'>
               <div className='card3D'>
-                <div className='card-image-container'>
-                  <img className='left-image'></img>
-                  <img className='middle-image'></img>
-                  <img className='right-image'></img>
-                </div>
-                <div className='card-body-container'>
-                  <div className='card-song-label'></div>
-                  <div className='card-song-label'></div>
-                  <div className='card-song-label'></div>
-                  <div className='card-song-label'></div>
-                </div>
+                <div className="shadow blue"></div>
+                  <div className='topArtists'>
+                    <div className='landing-image-carosel'>
+                      <img className='landing-second-image' src='https://i.scdn.co/image/ab67616d0000b273b7bea3d01f04e6d0408d2afe'></img>
+                      <img className='landing-first-image' src='https://i.scdn.co/image/ab67616d0000b273b7bea3d01f04e6d0408d2afe'></img>
+                      <img className='landing-second-image' src='https://i.scdn.co/image/ab67616d0000b273b7bea3d01f04e6d0408d2afe'></img>
+                    </div>
+                    <div className="landing-track-card">
+                      <p>1</p>
+                      <div className='track-card-container'>
+                        <img src='https://i.scdn.co/image/ab67616d0000b273b7bea3d01f04e6d0408d2afe' />
+                        <div className='track-card-name-container'>
+                          <h2>With or Without You</h2>
+                          <h3>U2</h3>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="landing-track-card">
+                      <p>2</p>
+                      <div className='track-card-container'>
+                        <img src='https://i.scdn.co/image/ab67616d0000b273b7bea3d01f04e6d0408d2afe' />
+                        <div className='track-card-name-container'>
+                          <h2>With or Without You</h2>
+                          <h3>U2</h3>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="landing-track-card">
+                      <p>3</p>
+                      <div className='track-card-container'>
+                        <img src='https://i.scdn.co/image/ab67616d0000b273b7bea3d01f04e6d0408d2afe' />
+                        <div className='track-card-name-container'>
+                          <h2>With or Without You</h2>
+                          <h3>U2</h3>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
               </div>
             </div>
           </div>

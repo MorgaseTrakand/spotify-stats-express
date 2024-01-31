@@ -5,16 +5,6 @@ import { useEffect } from "react";
 
 function VerifiedComponent() {
     const navigate = useNavigate();
-
-    function handleLogo() {
-      navigate('/');
-    }
-    function handleAccount() {
-      navigate('/account')
-    }
-    function handleSettings() {
-      navigate('/settings')
-    }
   
     async function handleClick() {
       if (localStorage.getItem("access_token")) {
@@ -46,7 +36,7 @@ function VerifiedComponent() {
           <div className='red shadow'></div>
   
           <div className='main-landing-container'>
-            <VerifiedHeader handleLogo={handleLogo} handleAccount={handleAccount} handleSettings={handleSettings}/>
+            <VerifiedHeader />
             <div className='left-container'>
               <div className='empty-spacing-div'></div>
               <div className='middle-div'>

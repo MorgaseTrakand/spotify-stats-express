@@ -43,16 +43,6 @@ function AuthorizedPage() {
 
   var username = "Morgase";
   const navigate = useNavigate();
-  function handleLogo() {
-    navigate('/');
-  }
-  function handleAccount() {
-    navigate('/account')
-  }
-  function handleSettings() {
-    navigate('/settings')
-  }
-
 
   return (
     <Layout>
@@ -63,7 +53,7 @@ function AuthorizedPage() {
           <div className='shadow blue'></div>
 
           <div className='main-auth-container'>
-          <VerifiedHeader handleLogo={handleLogo} handleAccount={handleAccount} handleSettings={handleSettings}/>
+          <VerifiedHeader />
 
 
             <div className='main-stats-container'>
