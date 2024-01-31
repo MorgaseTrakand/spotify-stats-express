@@ -55,7 +55,7 @@ app.get('/callback', csrfProtection, async (req, res) => {
         "client_secret": CLIENT_SECRET,
     };
     
-    const response = await axios.post(
+    await axios.post(
         SPOTIFY_TOKEN_URL,
         querystring.stringify(requestData), // Convert data to x-www-form-urlencoded format
         {
@@ -77,12 +77,20 @@ app.get('/callback', csrfProtection, async (req, res) => {
     });
 })
 
-app.get('/top-tracks', csrfProtection, async (req, res) => {
-    const access_token = req.query.access_token;
-    const limit = req.query.limit;
+app.get('/daily-db-update', csrfProtection, async (req, res) => {
+  const access_token = req.query.access_token;
+  const limit = 100;
+  const data = {
+    songs: [],
+    artists: [],
+    albums: [],
+    genres: [],
+    song_popularity: [],
+    artist_popularity: []
+  };
 
-    // Get user's top tracks from Spotify API
-    await axios.get('https://api.spotify.com/v1/me/top/tracks?&limit='+limit, {
+  //get top 50 songs
+  await axios.get('https://api.spotify.com/v1/me/top/tracks?&limit='+limit, {
       headers: {
         'Authorization': `Bearer ${access_token}`
       }
@@ -99,6 +107,69 @@ app.get('/top-tracks', csrfProtection, async (req, res) => {
         popularity: track.popularity
       }));
       console.log(topTracks)
+      //res.json(topTracks);
+      data.songs = topTracks;
+    })
+    .catch(error => {
+      console.error("Error in Axios request:", error);
+      res.status(500).send("Internal Server Error");
+    })
+    //calculate top popularity
+    //time period
+    //length
+
+  //get top 50 artists
+  await axios.get('https://api.spotify.com/v1/me/top/artists?&limit='+limit, {
+    headers: {
+      'Authorization': `Bearer ${access_token}`
+    }
+  })
+  .then(response => {
+    console.log(response.data)
+    const topArtists = response.data.items.map((artist, index) => ({
+      position: index + 1,
+      name: artist.name,
+      image: artist.images,
+      id: artist.id,
+      genres: artist.genres
+    }));
+    //res.json(topArtists);
+    data.artists = topArtists;
+  })
+  .catch(error => {
+    console.error("Error in Axios request:", error);
+    res.status(500).send("Internal Server Error");
+  })
+  res.json(data)
+    //popularity
+
+  //calculate genres here
+
+  //calculate top albums here
+
+
+})
+app.get('/top-tracks', csrfProtection, async (req, res) => {
+    const access_token = req.query.access_token;
+    const limit = req.query.limit;
+
+    // Get user's top tracks from Spotify API
+    await axios.get('https://api.spotify.com/v1/me/top/tracks?&limit='+limit, {
+      headers: {
+        'Authorization': `Bearer ${access_token}`
+      }
+    })
+    .then(response => {
+      console.log(response.data)
+      const topTracks = response.data.items.map((track, index) => ({
+        position: index + 1,
+        name: track.name,
+        artist: track.artists,
+        image: track.album.images,
+        id: track.id,
+        duration: track.duration_ms,
+        popularity: track.popularity
+      }));
       res.json(topTracks);
     })
     .catch(error => {
@@ -124,7 +195,8 @@ app.get('/top-artists', csrfProtection, async (req, res) => {
       position: index + 1,
       name: artist.name,
       image: artist.images,
-      id: artist.id
+      id: artist.id,
+      genres: artist.genres
     }));
     res.json(topArtists);
   })

@@ -64,7 +64,7 @@ function SummaryComponent({ artistsData, trackData }) {
                     key={index}
                     imageSrc={track.image[0].url}
                     trackName={track.name}
-                    artistName={track.artist || 'Unknown'}
+                    artistNames={track.artist.map(artist => artist.name).join(' / ') || 'Unknown'}
                     position={track.position}
                     id={track.id}
                   />
