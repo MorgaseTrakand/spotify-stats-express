@@ -140,14 +140,16 @@ app.get('/daily-db-update', csrfProtection, async (req, res) => {
     console.error("Error in Axios request:", error);
     res.status(500).send("Internal Server Error");
   })
-  res.json(data)
     //popularity
 
   //calculate genres here
 
+
+
+
   //calculate top albums here
 
-
+  res.json(data)
 })
 app.get('/top-tracks', csrfProtection, async (req, res) => {
     const access_token = req.query.access_token;
@@ -164,7 +166,7 @@ app.get('/top-tracks', csrfProtection, async (req, res) => {
       const topTracks = response.data.items.map((track, index) => ({
         position: index + 1,
         name: track.name,
-        artist: track.artists,
+        artist: track.artists.map(artist => artist.name),
         image: track.album.images,
         id: track.id,
         duration: track.duration_ms,
