@@ -6,7 +6,7 @@ const cors = require('cors')
 const axios = require('axios');
 const querystring = require('querystring');
 const { access } = require('fs')
-const db = require('./db'); 
+const { pool } = require('./db'); 
 
 
 var app = express();
@@ -44,8 +44,41 @@ app.get('/login', (req, res) => {
     )
     res.json( {"authUrl": authorize_url} )
 })
+const gatherUserData = async (access_token) => {
+  const me_url = 'https://api.spotify.com/v1/me';
+  try {
+    const response = await axios.get(me_url, {
+      headers: {
+        'Authorization': `Bearer ${access_token}`
+      }
+    });
+    console.log(response.data)
+    const email = response.data.email;
+    const display_name = response.data.display_name;
+    const id = response.data.id;
+
+    return {"email": email, "display_name": display_name, "id": id}
+
+  } catch (error) {
+    console.error("Error gathering userData:", error);
+  }
+} 
+
+const handleDBCheckingAndPopulation = async (email, display_name, id) => {
+  try {
+    const [existingUser] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
+    if (existingUser.length > 0) {
+      return;
+    }
+    await pool.query('INSERT INTO users (email, display_name, id) VALUES (?, ?, ?)', [email, display_name, id]);
+  } 
+  catch (error) {
+    console.log("Error checking db or populating db" + error)
+  }
+};
 
 app.get('/callback', csrfProtection, async (req, res) => {
+  try {
     const code = req.query.code;
     const requestData = {
         "grant_type": "authorization_code",
@@ -55,7 +88,7 @@ app.get('/callback', csrfProtection, async (req, res) => {
         "client_secret": CLIENT_SECRET,
     };
     
-    await axios.post(
+    const response = await axios.post(
         SPOTIFY_TOKEN_URL,
         querystring.stringify(requestData), // Convert data to x-www-form-urlencoded format
         {
@@ -65,171 +98,103 @@ app.get('/callback', csrfProtection, async (req, res) => {
           },
         }
       )
-    .then(response => {
-        const access_token = response.data.access_token;
-        const refresh_token = response.data.refresh_token;
-        redirect_url = 'http://localhost:3000/dashboard?access_token='+access_token+"&refresh_token="+refresh_token
-        res.redirect(redirect_url);
-     })
-    .catch(error => {
-        console.error("Error in Axios request:", error);
-        res.status(500).send("Internal Server Error");
-    });
-})
+      const access_token = response.data.access_token;
+      const refresh_token = response.data.refresh_token;
+      redirect_url = 'http://localhost:3000/dashboard?access_token='+access_token+"&refresh_token="+refresh_token
+  
+      const userData = await gatherUserData(access_token)
+      await handleDBCheckingAndPopulation(email=userData.email, display_name=userData.display_name, id=userData.id)
+  
+      res.redirect(redirect_url);
+  }
+  catch (error) {
+    console.log("error during callback" + error)
+  }
+});
+
 
 app.get('/daily-db-update', csrfProtection, async (req, res) => {
-  const access_token = req.query.access_token;
-  const limit = 100;
-  const data = {
-    songs: [],
-    artists: [],
-    albums: [],
-    genres: [],
-    song_popularity: [],
-    artist_popularity: []
-  };
-
-  
-  //get top 50 songs
-  await axios.get('https://api.spotify.com/v1/me/top/tracks?&limit='+limit, {
-      headers: {
-        'Authorization': `Bearer ${access_token}`
-      }
-    })
-    .then(response => {
-      const topTracks = response.data.items.map((track, index) => ({
-        position: index + 1,
-        name: track.name,
-        artist: track.artists.map(artist => artist.name),
-        image: track.album.images,
-        id: track.id,
-        genres: track.genres,
-        popularity: track.popularity
-      }));
-      data.songs = topTracks;
-    })
-    .catch(error => {
-      console.error("Error in Axios request:", error);
-      res.status(500).send("Internal Server Error?");
-      return;
-    })
-    //calculate top popularity
-    //time period
-    //length
-
-  //get top 50 artists
-  await axios.get('https://api.spotify.com/v1/me/top/artists?&limit='+limit, {
-    headers: {
-      'Authorization': `Bearer ${access_token}`
-    }
-  })
-  .then(response => {
-    console.log(response.data)
-    const topArtists = response.data.items.map((artist, index) => ({
-      position: index + 1,
-      name: artist.name,
-      image: artist.images,
-      id: artist.id,
-      genres: artist.genres
-    }));
-    data.artists = topArtists;
-  })
-  .catch(error => {
-    console.error("Error in Axios request:", error);
-    res.status(500).send("Internal Server Error?");
-    return;
-  })
-    //popularity
-
-  //calculate genres here
-  const genreCounts = {};
-
-  // Iterate over each object in the array
-  data.artists.forEach(artist => {
-    // Iterate over each genre in the artist's genres array
-    artist.genres.forEach(genre => {
-      // Increment the count for the current genre
-      genreCounts[genre] = (genreCounts[genre] || 0) + 1;
-    });
-  });
-
-  var genreArray = Object.entries(genreCounts);
-  const sortedGenreArray = genreArray.sort((a, b) => b[1] - a[1]);
-
-  const capitalizedGenreArray = sortedGenreArray.map(([genre, count]) => {
-    const words = genre.split(' ');
-    const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
-    const capitalizedGenre = capitalizedWords.join(' ');
-  return [capitalizedGenre, count];
-});
-  
-  
-  data.genres = capitalizedGenreArray;
-
-
-  //calculate top albums here
-
-  res.json(data)
-})
-
-
-app.get('/top-tracks', csrfProtection, async (req, res) => {
+  try {
     const access_token = req.query.access_token;
-    const limit = req.query.limit;
+    const limit = 100;
+    const data = {
+      songs: [],
+      artists: [],
+      albums: [],
+      genres: [],
+      song_popularity: [],
+      artist_popularity: []
+    };
 
-    // Get user's top tracks from Spotify API
-    await axios.get('https://api.spotify.com/v1/me/top/tracks?&limit='+limit, {
+    // Fetch top 50 songs
+    await axios.get('https://api.spotify.com/v1/me/top/tracks?&limit=' + limit, {
       headers: {
         'Authorization': `Bearer ${access_token}`
       }
     })
-    .then(response => {
-      console.log(response.data)
-      const topTracks = response.data.items.map((track, index) => ({
-        position: index + 1,
-        name: track.name,
-        artist: track.artists.map(artist => artist.name),
-        image: track.album.images,
-        id: track.id,
-        duration: track.duration_ms,
-        popularity: track.popularity
-      }));
-      res.json(topTracks);
+      .then(response => {
+        const topTracks = response.data.items.map((track, index) => ({
+          position: index + 1,
+          name: track.name,
+          artist: track.artists.map(artist => artist.name),
+          image: track.album.images,
+          id: track.id,
+          genres: track.genres,
+          popularity: track.popularity
+        }));
+        data.songs = topTracks;
+      });
+
+    // Fetch top 50 artists
+    await axios.get('https://api.spotify.com/v1/me/top/artists?&limit=' + limit, {
+      headers: {
+        'Authorization': `Bearer ${access_token}`
+      }
     })
-    .catch(error => {
-      console.error("Error in Axios request:", error);
-      res.status(500).send("Internal Server Error");
-    })
+      .then(response => {
+        const topArtists = response.data.items.map((artist, index) => ({
+          position: index + 1,
+          name: artist.name,
+          image: artist.images,
+          id: artist.id,
+          genres: artist.genres
+        }));
+        data.artists = topArtists;
+      });
+
+    // Calculate genres here
+    const genreCounts = {};
+    data.artists.forEach(artist => {
+      artist.genres.forEach(genre => {
+        genreCounts[genre] = (genreCounts[genre] || 0) + 1;
+      });
+    });
+
+    const genreArray = Object.entries(genreCounts);
+    const sortedGenreArray = genreArray.sort((a, b) => b[1] - a[1]);
+
+    const capitalizedGenreArray = sortedGenreArray.map(([genre, count]) => {
+      const words = genre.split(' ');
+      const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+      const capitalizedGenre = capitalizedWords.join(' ');
+      return [capitalizedGenre, count];
+    });
+
+    data.genres = capitalizedGenreArray;
+
+    // Calculate top albums here
+
+
+    //transfer to db
+
+
+    // Send the response
+    res.json(data);
+  } catch (error) {
+    console.error("Error in processing:", error);
+    res.status(500).send("Internal Server Error // access_token invalid");
+  }
 });
-
-
-app.get('/top-artists', csrfProtection, async (req, res) => {
-  const access_token = req.query.access_token;
-  const limit = req.query.limit;
-
-  // Get user's top tracks from Spotify API
-  await axios.get('https://api.spotify.com/v1/me/top/artists?&limit='+limit, {
-    headers: {
-      'Authorization': `Bearer ${access_token}`
-    }
-  })
-  .then(response => {
-    console.log(response.data)
-    const topArtists = response.data.items.map((artist, index) => ({
-      position: index + 1,
-      name: artist.name,
-      image: artist.images,
-      id: artist.id,
-      genres: artist.genres
-    }));
-    res.json(topArtists);
-  })
-  .catch(error => {
-    console.error("Error in Axios request:", error);
-    res.status(500).send("Internal Server Error");
-  })
-});
-
 
 app.get('/token_valid', csrfProtection, async (req, res) => {
   const me_url = 'https://api.spotify.com/v1/me';
@@ -258,7 +223,6 @@ app.get('/token_valid', csrfProtection, async (req, res) => {
     }
   }
 });
-
 
 app.get('/refresh_token', async (req, res) => {
   const refreshToken = req.query.refresh_token;
