@@ -19,7 +19,7 @@
   overflow-x: hidden;
 }
 .main-landing-container, .main-auth-container {
-  width: 85%;
+  width: 80%;
   height: 100%;
   display: flex;
 }
@@ -50,8 +50,8 @@
 
 .landing-header {
   height: 9vh;
-  width: 85%;
-  margin-left: 7.5%;
+  width: 80%;
+  margin-left: 10%;
   position: absolute;
   top: 0;
   left: 0;
@@ -255,7 +255,7 @@
 }
 .glassmorphism-test {
   background-color: #16232d;
-  height: 10%;
+  height: 120px;
   width: 97%;
   border-radius: 12px;
   margin-top: 2vh;

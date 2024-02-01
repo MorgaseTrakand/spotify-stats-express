@@ -44,39 +44,39 @@ const DataWrapper = ({ children }) => {
     genreTest(access_token)
   }
 
-  function topArtists(access_token, limit) {
-    fetch(`http://localhost:5000/top-artists?access_token=${access_token}&limit=${limit}`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log(data);      
-      setArtistsData(data)
-    })
-    .catch(error => {
-      console.error('Fetch error:', error);
-    });
-  }
+  // function topArtists(access_token, limit) {
+  //   fetch(`http://localhost:5000/top-artists?access_token=${access_token}&limit=${limit}`)
+  //   .then(response => {
+  //     if (!response.ok) {
+  //       throw new Error('Network response was not ok');
+  //     }
+  //     return response.json();
+  //   })
+  //   .then(data => {
+  //     console.log(data);      
+  //     setArtistsData(data)
+  //   })
+  //   .catch(error => {
+  //     console.error('Fetch error:', error);
+  //   });
+  // }
 
-  function topTracks(access_token, limit) {
-    fetch(`http://localhost:5000/top-tracks?access_token=${access_token}&limit=${limit}`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log(data)     
-      setTrackData(data)   
-    })
-    .catch(error => {
-      console.error('Fetch error:', error);
-    });
-  }
+  // function topTracks(access_token, limit) {
+  //   fetch(`http://localhost:5000/top-tracks?access_token=${access_token}&limit=${limit}`)
+  //   .then(response => {
+  //     if (!response.ok) {
+  //       throw new Error('Network response was not ok');
+  //     }
+  //     return response.json();
+  //   })
+  //   .then(data => {
+  //     console.log(data)     
+  //     setTrackData(data)   
+  //   })
+  //   .catch(error => {
+  //     console.error('Fetch error:', error);
+  //   });
+  // }
 
   function genreTest(access_token) {
     fetch(`http://localhost:5000/daily-db-update?access_token=${access_token}`)

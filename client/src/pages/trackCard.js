@@ -1,5 +1,5 @@
 import React from 'react';
-import './trackCard.css'; // Add this line
+import './allCards.css'; // Add this line
 
 const TrackCard = ({ imageSrc, trackName, artistNames, position, id }) => (
   <div className="track-card">

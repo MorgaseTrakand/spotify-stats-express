@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './artistCard.css'; // Add this line
+import './allCards.css'; // Add this line
 
 const ArtistCard = ({ imageSrc, artistName, position, id }) => {
   const artistCode = id;

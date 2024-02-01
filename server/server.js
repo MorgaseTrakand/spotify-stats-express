@@ -89,6 +89,7 @@ app.get('/daily-db-update', csrfProtection, async (req, res) => {
     artist_popularity: []
   };
 
+  
   //get top 50 songs
   await axios.get('https://api.spotify.com/v1/me/top/tracks?&limit='+limit, {
       headers: {
@@ -96,7 +97,6 @@ app.get('/daily-db-update', csrfProtection, async (req, res) => {
       }
     })
     .then(response => {
-      console.log(response)
       const topTracks = response.data.items.map((track, index) => ({
         position: index + 1,
         name: track.name,
@@ -106,13 +106,12 @@ app.get('/daily-db-update', csrfProtection, async (req, res) => {
         genres: track.genres,
         popularity: track.popularity
       }));
-      console.log(topTracks)
-      //res.json(topTracks);
       data.songs = topTracks;
     })
     .catch(error => {
       console.error("Error in Axios request:", error);
-      res.status(500).send("Internal Server Error");
+      res.status(500).send("Internal Server Error?");
+      return;
     })
     //calculate top popularity
     //time period
@@ -133,12 +132,12 @@ app.get('/daily-db-update', csrfProtection, async (req, res) => {
       id: artist.id,
       genres: artist.genres
     }));
-    //res.json(topArtists);
     data.artists = topArtists;
   })
   .catch(error => {
     console.error("Error in Axios request:", error);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send("Internal Server Error?");
+    return;
   })
     //popularity
 
@@ -155,22 +154,25 @@ app.get('/daily-db-update', csrfProtection, async (req, res) => {
   });
 
   var genreArray = Object.entries(genreCounts);
-
-  // Sort the array based on counts (descending order)
   const sortedGenreArray = genreArray.sort((a, b) => b[1] - a[1]);
 
-  // Create a new object from the sorted array
-  const sortedGenreCounts = Object.fromEntries(sortedGenreArray);
-  genreArray = Object.entries(sortedGenreArray);
-
-  // Update data.genres with the sorted genre counts
-  data.genres = genreArray;
+  const capitalizedGenreArray = sortedGenreArray.map(([genre, count]) => {
+    const words = genre.split(' ');
+    const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+    const capitalizedGenre = capitalizedWords.join(' ');
+  return [capitalizedGenre, count];
+});
+  
+  
+  data.genres = capitalizedGenreArray;
 
 
   //calculate top albums here
 
   res.json(data)
 })
+
+
 app.get('/top-tracks', csrfProtection, async (req, res) => {
     const access_token = req.query.access_token;
     const limit = req.query.limit;

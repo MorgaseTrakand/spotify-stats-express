@@ -20,8 +20,8 @@ function SummaryComponent({ artistsData, trackData, genreData }) {
       setimg3URL(artistsData[2].image[0].url);
     }
     if (trackData && trackData.length > 0 && trackData[0].image) {
-      settrackimg1URL(trackData[0].image[0].url)
-      settrackimg2URL(trackData[1].image[0].url)
+      settrackimg1URL(trackData[1].image[0].url)
+      settrackimg2URL(trackData[0].image[0].url)
       settrackimg3URL(trackData[2].image[0].url)
     }
   }, [artistsData, trackData]);
@@ -41,7 +41,7 @@ function SummaryComponent({ artistsData, trackData, genreData }) {
               <img className='first-image round img-custom-margin' src={img1URL}></img>
               <img className='third-image round' src={img3URL}></img>
             </div>
-            {artistsData.map((artist, index) => (
+            {artistsData.slice(0, 10).map((artist, index) => (
               <ArtistCard
                 key={index}
                 imageSrc={artist.image[0].url} 
@@ -60,7 +60,7 @@ function SummaryComponent({ artistsData, trackData, genreData }) {
                   <img className='first-image' src={trackimg2URL}></img>
                   <img className='second-image' src={trackimg3URL}></img>
                 </div>
-                {trackData.map((track, index) => (
+                {trackData.slice(0, 10).map((track, index) => (
                   <TrackCard
                     key={index}
                     imageSrc={track.image[0].url}
@@ -81,10 +81,10 @@ function SummaryComponent({ artistsData, trackData, genreData }) {
             <div className='genre-container'>
               <h1 className='stat-label'>Top Genres</h1>
               <div className='genres'>
-              {genreData.map((genre, index) => (
+              {genreData.slice(0, 10).map((genre, index) => (
                   <GenreCard
                     key={index}
-                    genreName={genre[1][0]}
+                    genreName={genre[0]}
                     position={index + 1}
                   />
                 ))}
