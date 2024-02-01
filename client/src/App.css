@@ -273,7 +273,7 @@
   background-color: #16232d;
   border-radius: 12px;
 }
-.topArtists-container h1 {
+.stat-label {
   font-family: "Open Sans";
   font-size: 24px;
   font-style: normal;
@@ -329,11 +329,6 @@
 .img-custom-margin {
   margin: 0 -3vh;
 }
-.testest {
-  background-color: forestgreen;
-  height: 10vh;
-  width: 10%;
-}
 .account-container {
   height: 20vh;
   width: 100%;
@@ -344,4 +339,16 @@
 .song-component-container {
   display: flex;
   justify-content: start;
+}
+.genre-container, .album-container {
+  min-height: 30vh;
+  height: auto;
+  width: 47.5%;
+}
+.genres, .albums {
+  background-color: #16232d;
+  border-radius: 12px;
+  width: 100%;
+  min-height: 30vh;
+  height: auto;
 }

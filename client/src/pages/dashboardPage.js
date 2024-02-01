@@ -10,7 +10,7 @@ import VerifiedHeader from '../components/VerifiedHeader';
 
 
 function AuthorizedPage() {
-  const { artistsData, trackData } = useDataContext();
+  const { artistsData, trackData, genreData } = useDataContext();
   const [renderSwitch, setRenderSwitch] = useState(1);
   const [labelVisibility, setLabelVisibility] = useState({
     1: true,
@@ -72,7 +72,7 @@ function AuthorizedPage() {
 
               <div className='outlined-stats-container'>
                 {renderSwitch === 1 ? (
-                  <SummaryComponent trackData={trackData} artistsData={artistsData}/>
+                  <SummaryComponent trackData={trackData} artistsData={artistsData} genreData={genreData}/>
                 ) : renderSwitch === 2 ? (
                   <SongsComponent trackData={trackData} />
                 ) : renderSwitch === 3 ? (

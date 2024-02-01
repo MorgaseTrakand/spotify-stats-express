@@ -100,7 +100,7 @@ app.get('/daily-db-update', csrfProtection, async (req, res) => {
       const topTracks = response.data.items.map((track, index) => ({
         position: index + 1,
         name: track.name,
-        artist: track.artists[0].name,
+        artist: track.artists.map(artist => artist.name),
         image: track.album.images,
         id: track.id,
         genres: track.genres,
@@ -143,8 +143,28 @@ app.get('/daily-db-update', csrfProtection, async (req, res) => {
     //popularity
 
   //calculate genres here
+  const genreCounts = {};
 
+  // Iterate over each object in the array
+  data.artists.forEach(artist => {
+    // Iterate over each genre in the artist's genres array
+    artist.genres.forEach(genre => {
+      // Increment the count for the current genre
+      genreCounts[genre] = (genreCounts[genre] || 0) + 1;
+    });
+  });
 
+  var genreArray = Object.entries(genreCounts);
+
+  // Sort the array based on counts (descending order)
+  const sortedGenreArray = genreArray.sort((a, b) => b[1] - a[1]);
+
+  // Create a new object from the sorted array
+  const sortedGenreCounts = Object.fromEntries(sortedGenreArray);
+  genreArray = Object.entries(sortedGenreArray);
+
+  // Update data.genres with the sorted genre counts
+  data.genres = genreArray;
 
 
   //calculate top albums here

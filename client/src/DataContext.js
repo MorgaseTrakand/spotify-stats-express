@@ -5,9 +5,10 @@ const DataContext = createContext();
 export const DataProvider = ({ children }) => {
   const [artistsData, setArtistsData] = useState([]);
   const [trackData, setTrackData] = useState([]);
+  const [genreData, setGenreData] = useState([]);
 
   return (
-    <DataContext.Provider value={{ artistsData, setArtistsData, trackData, setTrackData }}>
+    <DataContext.Provider value={{ artistsData, setArtistsData, trackData, setTrackData, genreData, setGenreData }}>
       {children}
     </DataContext.Provider>
   );

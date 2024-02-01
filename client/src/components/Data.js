@@ -7,8 +7,7 @@ import { useDataContext } from '../DataContext';
 it basically saves the page.js files from clutter so that the focus for those files can be UI only
 */ 
 const DataWrapper = ({ children }) => {
-  const { setArtistsData, setTrackData } = useDataContext();
-  const { artistsData, trackData } = useDataContext();
+  const { setArtistsData, setTrackData, setGenreData } = useDataContext();
 
   useEffect(() => {
     if (localStorage.getItem("access_token")) {
@@ -25,8 +24,9 @@ const DataWrapper = ({ children }) => {
     const access_token = localStorage.getItem("access_token")
     const refresh_token = localStorage.getItem("refresh_token")
 
-    topArtists(access_token, 10)
-    topTracks(access_token, 10)
+    //topArtists(access_token, 10)
+    //topTracks(access_token, 10)
+    genreTest(access_token)
   }
   
   function noAccessToken() {
@@ -39,8 +39,9 @@ const DataWrapper = ({ children }) => {
     const test = localStorage.getItem("access_token")
     console.log("(In data.js) test: " + test)
 
-    topArtists(access_token, 10);
-    topTracks(access_token, 10); 
+    //topArtists(access_token, 10);
+    //topTracks(access_token, 10); 
+    genreTest(access_token)
   }
 
   function topArtists(access_token, limit) {
@@ -71,6 +72,27 @@ const DataWrapper = ({ children }) => {
     .then(data => {
       console.log(data)     
       setTrackData(data)   
+    })
+    .catch(error => {
+      console.error('Fetch error:', error);
+    });
+  }
+
+  function genreTest(access_token) {
+    fetch(`http://localhost:5000/daily-db-update?access_token=${access_token}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      setTrackData(data.songs) 
+      setArtistsData(data.artists) 
+      setGenreData(data.genres) 
+      console.log(data.genres)
+      console.log(data.artists)
+      console.log(data.songs)
     })
     .catch(error => {
       console.error('Fetch error:', error);

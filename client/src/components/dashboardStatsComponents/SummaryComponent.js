@@ -1,8 +1,9 @@
 import ArtistCard from '../../pages/artistCard';
 import TrackCard from '../../pages/trackCard'; 
+import GenreCard from '../../pages/genreCard';
 import { useEffect, useState } from 'react';
 
-function SummaryComponent({ artistsData, trackData }) {
+function SummaryComponent({ artistsData, trackData, genreData }) {
   const [img1URL, setimg1URL] = useState();
   const [img2URL, setimg2URL] = useState();
   const [img3URL, setimg3URL] = useState();
@@ -33,7 +34,7 @@ function SummaryComponent({ artistsData, trackData }) {
 
       <div className='dashboard-flexbox-container'>
         <div className='topArtists-container'>
-          <h1>Top Artists</h1>
+          <h1 className='stat-label'>Top Artists</h1>
           <div className='topArtists'>
             <div className='image-carosel'>
               <img className='second-image round' src={img2URL}></img>
@@ -52,7 +53,7 @@ function SummaryComponent({ artistsData, trackData }) {
           </div>
           </div>
             <div className='topArtists-container'>
-              <h1>Top Tracks</h1>
+              <h1 className='stat-label'>Top Tracks</h1>
               <div className='topArtists'>
                 <div className='image-carosel'>
                   <img className='second-image' src={trackimg1URL}></img>
@@ -72,9 +73,24 @@ function SummaryComponent({ artistsData, trackData }) {
               </div>
             </div>
           </div>
-          {/* <div className='testest'>
-            place next two boxes here
-          </div> */}
+          <div className='dashboard-flexbox-container'>
+            <div className='album-container'>
+              <h1 className='stat-label'>Top Albums</h1>
+              <div className='albums'></div>
+            </div>
+            <div className='genre-container'>
+              <h1 className='stat-label'>Top Genres</h1>
+              <div className='genres'>
+              {genreData.map((genre, index) => (
+                  <GenreCard
+                    key={index}
+                    genreName={genre[1][0]}
+                    position={index + 1}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
   );
 }
