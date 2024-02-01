@@ -6,8 +6,7 @@ const cors = require('cors')
 const axios = require('axios');
 const querystring = require('querystring');
 const { access } = require('fs')
-const { pool } = require('./db'); 
-
+const db = require('./db'); 
 
 var app = express();
 const port = 5000;
@@ -66,11 +65,12 @@ const gatherUserData = async (access_token) => {
 
 const handleDBCheckingAndPopulation = async (email, display_name, id) => {
   try {
-    const [existingUser] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
+    const [existingUser] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
     if (existingUser.length > 0) {
+      console.log(email + " already exists in db")
       return;
     }
-    await pool.query('INSERT INTO users (email, display_name, id) VALUES (?, ?, ?)', [email, display_name, id]);
+    await db.query('INSERT INTO users (email, display_name, id) VALUES (?, ?, ?)', [email, display_name, id]);
   } 
   catch (error) {
     console.log("Error checking db or populating db" + error)
