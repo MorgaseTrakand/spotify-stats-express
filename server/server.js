@@ -5,7 +5,6 @@ const express = require('express')
 const cors = require('cors')
 const axios = require('axios');
 const querystring = require('querystring');
-const { access } = require('fs')
 const db = require('./db'); 
 
 var app = express();
@@ -13,7 +12,6 @@ const port = 5000;
 
 // setup route middlewares
 var csrfProtection = csrf({ cookie: true })
-var parseForm = bodyParser.urlencoded({ extended: false })
 
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -67,7 +65,6 @@ const handleDBCheckingAndPopulation = async (email, display_name, id) => {
   try {
     const [existingUser] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
     if (existingUser.length > 0) {
-      console.log(email + " already exists in db")
       return;
     }
     await db.query('INSERT INTO users (email, display_name, id) VALUES (?, ?, ?)', [email, display_name, id]);
@@ -100,11 +97,11 @@ app.get('/callback', csrfProtection, async (req, res) => {
       )
       const access_token = response.data.access_token;
       const refresh_token = response.data.refresh_token;
-      redirect_url = 'http://localhost:3000/dashboard?access_token='+access_token+"&refresh_token="+refresh_token
-  
+
       const userData = await gatherUserData(access_token)
       await handleDBCheckingAndPopulation(email=userData.email, display_name=userData.display_name, id=userData.id)
-  
+      redirect_url = 'http://localhost:3000/dashboard?access_token='+access_token+"&refresh_token="+refresh_token+"&username="+userData.display_name
+
       res.redirect(redirect_url);
   }
   catch (error) {
@@ -113,7 +110,7 @@ app.get('/callback', csrfProtection, async (req, res) => {
 });
 
 
-app.get('/daily-db-update', csrfProtection, async (req, res) => {
+app.get('/user-data', csrfProtection, async (req, res) => {
   try {
     const access_token = req.query.access_token;
     const limit = 100;
@@ -183,10 +180,6 @@ app.get('/daily-db-update', csrfProtection, async (req, res) => {
     data.genres = capitalizedGenreArray;
 
     // Calculate top albums here
-
-
-    //transfer to db
-
 
     // Send the response
     res.json(data);

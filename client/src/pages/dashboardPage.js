@@ -10,7 +10,7 @@ import VerifiedHeader from '../components/VerifiedHeader';
 
 
 function AuthorizedPage() {
-  const { artistsData, trackData, genreData } = useDataContext();
+  const { artistsData, trackData, genreData, username } = useDataContext();
   const [renderSwitch, setRenderSwitch] = useState(1);
   const [labelVisibility, setLabelVisibility] = useState({
     1: true,
@@ -39,8 +39,6 @@ function AuthorizedPage() {
     4: "Albums",
     5: "Genres"
   }
-
-  var username = "Morgase";
 
   return (
     <Layout>

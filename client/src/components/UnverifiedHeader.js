@@ -1,5 +1,5 @@
 function UnverifiedHeader({ handleClick }) {
-  
+
     return (
     <header className='landing-header'>
         <h1 className='logo'><span className='green-text'>Spotify</span>Stats</h1>

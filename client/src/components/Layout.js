@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { useDataContext } from '../DataContext';
 
 /* This function will serve as a higher-order component (HOC) that will wrap around every page on this application. 
 
@@ -86,24 +86,30 @@ const Layout = ({ children }) => {
       return false;
     }  
   }, [refreshToken, navigate]);
+  const { trackData } = useDataContext();
 
 
   useEffect(() => {
     const handleValidation = async () => {
-      const AT = localStorage.getItem("access_token");
-      const RT = localStorage.getItem("refresh_token");
-      if (AT) {
-        console.log("has access_token: "+AT)
-        if (await validate(AT)) {
+      const access_token = localStorage.getItem("access_token");
+      const refresh_token = localStorage.getItem("refresh_token");
+      if (access_token) {
+        console.log("has access_token: "+access_token)
+        if (await validate(access_token)) {
         } else {
-          await refreshToken(RT);
+          await refreshToken(refresh_token);
         }
       } else {
         logout();
       }
     };
-  
-    handleValidation();
+
+    if (trackData[0]) {
+      return;
+    }
+    else {
+      handleValidation();
+    }
   }, [logout, refreshToken, validate]);
 
   return (

@@ -4,10 +4,10 @@ import { useDataContext } from '../DataContext';
 
 /* This function will serve as a higher-order component (HOC) that will wrap any page that requires the gathering of data
 
-it basically saves the page.js files from clutter so that the focus for those files can be UI only
+It basically saves the page.js files from clutter so that the focus for those files can be UI only
 */ 
 const DataWrapper = ({ children }) => {
-  const { setArtistsData, setTrackData, setGenreData } = useDataContext();
+  const { trackData, setArtistsData, setTrackData, setGenreData, setUsername } = useDataContext();
 
   useEffect(() => {
     if (localStorage.getItem("access_token")) {
@@ -18,68 +18,35 @@ const DataWrapper = ({ children }) => {
     }
   }, []);
 
-
   function hasAccessToken() {
-    console.log("has access token in data.js")
+    const queryString = window.location.search; 
+    const params = new URLSearchParams(queryString);
+    const username = params.get('username');
+    setUsername(username)
     const access_token = localStorage.getItem("access_token")
-    const refresh_token = localStorage.getItem("refresh_token")
 
-    //topArtists(access_token, 10)
-    //topTracks(access_token, 10)
     genreTest(access_token)
   }
   
   function noAccessToken() {
-    const queryString = window.location.search; // Gets the query string (?param1=value1&param2=value2)
+    const queryString = window.location.search; 
     const params = new URLSearchParams(queryString);
     const access_token = params.get('access_token');
     const refresh_token = params.get('refresh_token');
     localStorage.setItem('access_token', access_token);
     localStorage.setItem('refresh_token', refresh_token)
-    const test = localStorage.getItem("access_token")
-    console.log("(In data.js) test: " + test)
+    const username = params.get('username');
+    setUsername(username)
 
-    //topArtists(access_token, 10);
-    //topTracks(access_token, 10); 
     genreTest(access_token)
   }
 
-  // function topArtists(access_token, limit) {
-  //   fetch(`http://localhost:5000/top-artists?access_token=${access_token}&limit=${limit}`)
-  //   .then(response => {
-  //     if (!response.ok) {
-  //       throw new Error('Network response was not ok');
-  //     }
-  //     return response.json();
-  //   })
-  //   .then(data => {
-  //     console.log(data);      
-  //     setArtistsData(data)
-  //   })
-  //   .catch(error => {
-  //     console.error('Fetch error:', error);
-  //   });
-  // }
-
-  // function topTracks(access_token, limit) {
-  //   fetch(`http://localhost:5000/top-tracks?access_token=${access_token}&limit=${limit}`)
-  //   .then(response => {
-  //     if (!response.ok) {
-  //       throw new Error('Network response was not ok');
-  //     }
-  //     return response.json();
-  //   })
-  //   .then(data => {
-  //     console.log(data)     
-  //     setTrackData(data)   
-  //   })
-  //   .catch(error => {
-  //     console.error('Fetch error:', error);
-  //   });
-  // }
-
   function genreTest(access_token) {
-    fetch(`http://localhost:5000/daily-db-update?access_token=${access_token}`)
+    if (trackData[0]) {
+      console.log("already has set data in react context")
+      return;
+    }
+    fetch(`http://localhost:5000/user-data?access_token=${access_token}`)
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -90,6 +57,7 @@ const DataWrapper = ({ children }) => {
       setTrackData(data.songs) 
       setArtistsData(data.artists) 
       setGenreData(data.genres) 
+
       console.log(data.genres)
       console.log(data.artists)
       console.log(data.songs)
@@ -99,8 +67,6 @@ const DataWrapper = ({ children }) => {
     });
   }
 
-
-
   return (
     <div>
       { children }
@@ -109,4 +75,3 @@ const DataWrapper = ({ children }) => {
 }
 
 export default DataWrapper;
-
