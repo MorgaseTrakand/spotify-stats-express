@@ -7,7 +7,7 @@ import { useDataContext } from '../DataContext';
 It basically saves the page.js files from clutter so that the focus for those files can be UI only
 */ 
 const DataWrapper = ({ children }) => {
-  const { trackData, setArtistsData, setTrackData, setGenreData, setUsername } = useDataContext();
+  const { trackData, setArtistsData, setTrackData, setGenreData } = useDataContext();
 
   useEffect(() => {
     if (localStorage.getItem("access_token")) {
@@ -22,7 +22,7 @@ const DataWrapper = ({ children }) => {
     const queryString = window.location.search; 
     const params = new URLSearchParams(queryString);
     const username = params.get('username');
-    setUsername(username)
+    localStorage.setItem('username', username)
     const access_token = localStorage.getItem("access_token")
 
     genreTest(access_token)
@@ -36,7 +36,7 @@ const DataWrapper = ({ children }) => {
     localStorage.setItem('access_token', access_token);
     localStorage.setItem('refresh_token', refresh_token)
     const username = params.get('username');
-    setUsername(username)
+    localStorage.setItem('username', username)
 
     genreTest(access_token)
   }

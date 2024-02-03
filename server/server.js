@@ -120,7 +120,7 @@ app.get('/user-data', csrfProtection, async (req, res) => {
       albums: [],
       genres: [],
       song_popularity: [],
-      artist_popularity: []
+      artist_popularity: [],
     };
 
     // Fetch top 50 songs

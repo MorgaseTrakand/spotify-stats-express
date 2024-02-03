@@ -10,7 +10,7 @@ import VerifiedHeader from '../components/VerifiedHeader';
 
 
 function AuthorizedPage() {
-  const { artistsData, trackData, genreData, username } = useDataContext();
+  const { artistsData, trackData, genreData } = useDataContext();
   const [renderSwitch, setRenderSwitch] = useState(1);
   const [labelVisibility, setLabelVisibility] = useState({
     1: true,
@@ -53,7 +53,7 @@ function AuthorizedPage() {
 
             <div className='main-stats-container'>
               <div className='label-container'>
-                <h1 className='username focus'>{username}</h1>
+                <h1 className='username focus'>{localStorage.getItem('username')}</h1>
                 <div className='positioning-div'>
                   {[1, 2, 3, 4, 5].map((label) => (
                     <h1

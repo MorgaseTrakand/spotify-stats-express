@@ -6,10 +6,9 @@ export const DataProvider = ({ children }) => {
   const [artistsData, setArtistsData] = useState([]);
   const [trackData, setTrackData] = useState([]);
   const [genreData, setGenreData] = useState([]);
-  const [username, setUsername] = useState([]);
 
   return (
-    <DataContext.Provider value={{ artistsData, setArtistsData, trackData, setTrackData, genreData, setGenreData, username, setUsername }}>
+    <DataContext.Provider value={{ artistsData, setArtistsData, trackData, setTrackData, genreData, setGenreData }}>
       {children}
     </DataContext.Provider>
   );
