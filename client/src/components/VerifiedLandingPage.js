@@ -1,7 +1,6 @@
 
 import { useNavigate } from "react-router-dom";
 import VerifiedHeader from "./VerifiedHeader";
-import { useEffect } from "react";
 
 function VerifiedComponent() {
     const navigate = useNavigate();
@@ -44,58 +43,21 @@ function VerifiedComponent() {
                   Unlock your Detailed and Personal Spotify Stats
                 </h1>
                 <h2 className='focus'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis imperdiet velit orci, ac imperdiet nibh tincidunt non. Aliquam ullamcorper felis maximus orci congue fermentum et eget eros. 
+                  Beyond Wrapped: Our Platform Allows You To Experience Your Spotify Journey with Continuous, In-Depth Statistics.
                 </h2>
                 <div onClick={handleClick} className='cta-button centered-button focus'>
-                  <h1>My Profile</h1>
+                  <h1>View Profile</h1>
                 </div>
               </div>
               <div className='notice'>
                 <h3>
-                  I accept that data is gathered  in accordance to the Privacy Policy
+                  I acknowledge that data will be collected in accordance with the Privacy Policy.
                 </h3>
               </div>
             </div>
             <div className='right-container'>
               <div className='card3D'>
-                <div className="shadow blue"></div>
-                  <div className='topArtists'>
-                    <div className='landing-image-carosel'>
-                      <img className='landing-second-image' src='https://i.scdn.co/image/ab67616d0000b273b7bea3d01f04e6d0408d2afe'></img>
-                      <img className='landing-first-image' src='https://i.scdn.co/image/ab67616d0000b273b7bea3d01f04e6d0408d2afe'></img>
-                      <img className='landing-second-image' src='https://i.scdn.co/image/ab67616d0000b273b7bea3d01f04e6d0408d2afe'></img>
-                    </div>
-                    <div className="landing-track-card">
-                      <p>1</p>
-                      <div className='track-card-container'>
-                        <img src='https://i.scdn.co/image/ab67616d0000b273b7bea3d01f04e6d0408d2afe' />
-                        <div className='track-card-name-container'>
-                          <h2>With or Without You</h2>
-                          <h3>U2</h3>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="landing-track-card">
-                      <p>2</p>
-                      <div className='track-card-container'>
-                        <img src='https://i.scdn.co/image/ab67616d0000b273b7bea3d01f04e6d0408d2afe' />
-                        <div className='track-card-name-container'>
-                          <h2>With or Without You</h2>
-                          <h3>U2</h3>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="landing-track-card">
-                      <p>3</p>
-                      <div className='track-card-container'>
-                        <img src='https://i.scdn.co/image/ab67616d0000b273b7bea3d01f04e6d0408d2afe' />
-                        <div className='track-card-name-container'>
-                          <h2>With or Without You</h2>
-                          <h3>U2</h3>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                <img className='focus' src="/3DCard.png"></img>    
               </div>
             </div>
           </div>

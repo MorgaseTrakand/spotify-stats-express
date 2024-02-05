@@ -124,7 +124,7 @@ app.get('/user-data', csrfProtection, async (req, res) => {
     };
 
     // Fetch top 50 songs
-    await axios.get('https://api.spotify.com/v1/me/top/tracks?&limit=' + limit, {
+    await axios.get('https://api.spotify.com/v1/me/top/tracks?&limit='+limit+"&time_range=long_term", {
       headers: {
         'Authorization': `Bearer ${access_token}`
       }
@@ -137,13 +137,14 @@ app.get('/user-data', csrfProtection, async (req, res) => {
           image: track.album.images,
           id: track.id,
           genres: track.genres,
-          popularity: track.popularity
+          popularity: track.popularity,
+          albums: track.album
         }));
         data.songs = topTracks;
       });
 
     // Fetch top 50 artists
-    await axios.get('https://api.spotify.com/v1/me/top/artists?&limit=' + limit, {
+    await axios.get('https://api.spotify.com/v1/me/top/artists?&limit='+limit+"&time_range=long_term", {
       headers: {
         'Authorization': `Bearer ${access_token}`
       }

@@ -2,7 +2,6 @@ import '../App.css';
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout'
 import Data from '../components/Data'
-import '../App.css';
 import { useDataContext } from '../DataContext';
 import SummaryComponent from '../components/dashboardStatsComponents/SummaryComponent';
 import SongsComponent from '../components/dashboardStatsComponents/SongsComponent';

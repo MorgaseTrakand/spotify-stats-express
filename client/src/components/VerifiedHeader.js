@@ -22,7 +22,7 @@ function VerifiedHeader() {
               <h2 onClick={handleAccount}>Account</h2>
               <h2 onClick={handleSettings}>Settings</h2>
               <div className='auth-button' onClick={handleProfile}>
-                <h2>My Profile</h2>
+                <h2>Profile</h2>
               </div>
             </div>
         </header>
