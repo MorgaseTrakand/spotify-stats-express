@@ -1,12 +1,12 @@
 import '../App.css';
 import React, { useState, useEffect } from 'react';
-import VerifiedHeader from '../components/VerifiedHeader';
 import { useNavigate } from 'react-router-dom';
+import AuthHeader from '../components/AuthHeader';
 
 
 function AccountPage() {
   const navigate = useNavigate();
-  const username = "null";
+  const username = localStorage.getItem("username");
 
   function handleLogout() {
     localStorage.removeItem("access_token")
@@ -14,12 +14,11 @@ function AccountPage() {
     navigate('/')
   }
 
-
   return (
     <div className='hero'>
       <div className='shadow blue'></div>
       <div className='main-auth-container'>
-        <VerifiedHeader/>
+        <AuthHeader />
         <div className='account-container'>
           <h1>Spotify Account</h1>
           <h2>Username: {username}</h2>

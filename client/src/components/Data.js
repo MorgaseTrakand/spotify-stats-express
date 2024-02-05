@@ -19,10 +19,6 @@ const DataWrapper = ({ children }) => {
   }, []);
 
   function hasAccessToken() {
-    const queryString = window.location.search; 
-    const params = new URLSearchParams(queryString);
-    const username = params.get('username');
-    localStorage.setItem('username', username)
     const access_token = localStorage.getItem("access_token")
 
     genreTest(access_token)

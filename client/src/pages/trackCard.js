@@ -4,7 +4,7 @@ import './allCards.css'; // Add this line
 const TrackCard = ({ imageSrc, trackName, artistNames, position, id }) => (
   <div className="track-card">
     <p>{position}</p>
-    <div className='track-card-container'>
+    <div className='track-card-container focus'>
       <img src={imageSrc} alt={`Song ${trackName}`} />
       <div className='track-card-name-container'>
         <h2>{trackName}</h2>

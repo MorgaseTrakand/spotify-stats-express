@@ -5,11 +5,29 @@ import Data from '../components/Data'
 import { useDataContext } from '../DataContext';
 import SummaryComponent from '../components/dashboardStatsComponents/SummaryComponent';
 import SongsComponent from '../components/dashboardStatsComponents/SongsComponent';
-import VerifiedHeader from '../components/VerifiedHeader';
+import ArtistComponent from '../components/dashboardStatsComponents/ArtistComponent';
+import GenreComponent from '../components/dashboardStatsComponents/GenreComponent';
+import AuthHeader from '../components/AuthHeader';
 
 
 function AuthorizedPage() {
+  const [isLoading, setIsLoading] = useState(true);
   const { artistsData, trackData, genreData } = useDataContext();
+
+  useEffect(() => {
+    const spinner = document.querySelector(".lds-ring");
+    const outlinedContainer = document.querySelector(".outlined-stats-container")
+    
+    if (artistsData[1]) {
+      setIsLoading(false)
+      if (isLoading) {
+        spinner.classList.add("display-none");
+        outlinedContainer.classList.remove("add-blur");
+      }
+    }
+  }, [artistsData, trackData, genreData])
+
+
   const [renderSwitch, setRenderSwitch] = useState(1);
   const [labelVisibility, setLabelVisibility] = useState({
     1: true,
@@ -48,7 +66,7 @@ function AuthorizedPage() {
           <div className='shadow blue'></div>
 
           <div className='main-auth-container'>
-          <VerifiedHeader />
+          <AuthHeader />
 
             <div className='main-stats-container'>
               <div className='label-container'>
@@ -66,18 +84,18 @@ function AuthorizedPage() {
                   ))}
                 </div>
               </div>
-
-              <div className='outlined-stats-container'>
+              <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+              <div className='outlined-stats-container add-blur'>
                 {renderSwitch === 1 ? (
                   <SummaryComponent trackData={trackData} artistsData={artistsData} genreData={genreData}/>
                 ) : renderSwitch === 2 ? (
                   <SongsComponent trackData={trackData} />
                 ) : renderSwitch === 3 ? (
-                  <SummaryComponent trackData={trackData} artistsData={artistsData} />
+                  <ArtistComponent artistsData={artistsData} />
                 ) : renderSwitch === 4 ? (
                   <SummaryComponent trackData={trackData} artistsData={artistsData} />
                 ) : (
-                  <SummaryComponent trackData={trackData} artistsData={artistsData} />
+                  <GenreComponent genreData={genreData} />
                 )}
               </div>
             </div>

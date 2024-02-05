@@ -44,7 +44,7 @@ function SummaryComponent({ artistsData, trackData, genreData }) {
             {artistsData.slice(0, 10).map((artist, index) => (
               <ArtistCard
                 key={index}
-                imageSrc={artist.image[0].url} 
+                imageSrc={artist.image[1].url} 
                 artistName={artist.name}
                 position={artist.position}
                 id={artist.id}
@@ -63,7 +63,7 @@ function SummaryComponent({ artistsData, trackData, genreData }) {
                 {trackData.slice(0, 10).map((track, index) => (
                   <TrackCard
                     key={index}
-                    imageSrc={track.image[0].url}
+                    imageSrc={track.image[1].url}
                     trackName={track.name}
                     artistNames={track.artist.map(artist => artist).join(' / ') || 'Unknown'}
                     position={track.position}
@@ -81,13 +81,13 @@ function SummaryComponent({ artistsData, trackData, genreData }) {
             <div className='genre-container'>
               <h1 className='stat-label'>Top Genres</h1>
               <div className='genres'>
-              {genreData.slice(0, 10).map((genre, index) => (
-                  <GenreCard
-                    key={index}
-                    genreName={genre[0]}
-                    position={index + 1}
-                  />
-                ))}
+                {genreData.slice(0, 10).map((genre, index) => (
+                    <GenreCard
+                      key={index}
+                      genreName={genre[0]}
+                      position={index + 1}
+                    />
+                  ))}
               </div>
             </div>
           </div>

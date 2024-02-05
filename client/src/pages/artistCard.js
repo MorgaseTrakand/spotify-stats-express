@@ -8,7 +8,7 @@ const ArtistCard = ({ imageSrc, artistName, position, id }) => {
   };
   
   return (
-    <div className="artist-card">
+    <div className="artist-card focus">
       <p>{position}</p>
       <img onClick={handleArtistRedirect} src={imageSrc} alt={`Artist ${artistName}`} />
       <h3 onClick={handleArtistRedirect}>{artistName}</h3>

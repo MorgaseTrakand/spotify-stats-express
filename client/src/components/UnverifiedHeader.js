@@ -6,7 +6,6 @@ function UnverifiedHeader({ handleClick }) {
         <div onClick={handleClick} className='cta-button header-cta'>
             <h1>Sign in with Spotify</h1>
         </div>
-        <div className="mobile"></div>
     </header>
     );
   }
