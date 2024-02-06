@@ -5,13 +5,12 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import LandingPage from './pages/landingPage';
-import React, { useState } from 'react';
+import React from 'react';
 import { DataProvider } from './DataContext';
 import AuthorizedPage from './pages/dashboardPage';
 import AccountPage from './pages/AccountPage';
 
 function App() {
-  const [accessToken, setAccessToken] = useState('Initial value');
 
   return (
     <Router>

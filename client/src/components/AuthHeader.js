@@ -6,9 +6,6 @@ function AuthHeader() {
     function handleLogo() {
       navigate('/')
     }
-    function handleSettings() {
-      navigate('/settings')
-    }
     function handleAccount() {
       navigate('/account')
     }
@@ -20,7 +17,6 @@ function AuthHeader() {
             <h1 onClick={handleLogo} className='logo'><span className='green-text'>Spotify</span>Stats</h1>
             <div className='positioning-div'>
               <h2 onClick={handleAccount}>Account</h2>
-              <h2 onClick={handleSettings}>Settings</h2>
               <div className='auth-button' onClick={handleProfile}>
                 <h2>Profile</h2>
               </div>

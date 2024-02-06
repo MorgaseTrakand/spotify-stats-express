@@ -38,9 +38,9 @@ function SummaryComponent({ artistsData, trackData, genreData, albumData }) {
           <h1 className='stat-label'>Top Artists</h1>
           <div className='topArtists'>
             <div className='image-carosel'>
-              <img className='second-image round' src={img2URL}></img>
-              <img className='first-image round img-custom-margin' src={img1URL}></img>
-              <img className='third-image round' src={img3URL}></img>
+              <img className='second-image round' src={img2URL} alt='Second Artist'></img>
+              <img className='first-image round img-custom-margin' src={img1URL} alt='First Artist'></img>
+              <img className='third-image round' src={img3URL} alt='Third Artist'></img>
             </div>
             {artistsData.slice(0, 10).map((artist, index) => (
               <ArtistCard
@@ -57,9 +57,9 @@ function SummaryComponent({ artistsData, trackData, genreData, albumData }) {
               <h1 className='stat-label'>Top Tracks</h1>
               <div className='topArtists'>
                 <div className='image-carosel'>
-                  <img className='second-image' src={trackimg1URL}></img>
-                  <img className='first-image' src={trackimg2URL}></img>
-                  <img className='second-image' src={trackimg3URL}></img>
+                  <img className='second-image' src={trackimg1URL} alt='Second Artist'></img>
+                  <img className='first-image' src={trackimg2URL} alt='First Artist'></img>
+                  <img className='second-image' src={trackimg3URL} alt='Third Artist'></img>
                 </div>
                 {trackData.slice(0, 10).map((track, index) => (
                   <TrackCard

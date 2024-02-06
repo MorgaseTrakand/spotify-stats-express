@@ -26,7 +26,7 @@ function AuthorizedPage() {
         outlinedContainer.classList.remove("add-blur");
       }
     }
-  }, [artistsData, trackData, genreData, albumData])
+  }, [artistsData, trackData, genreData, albumData, isLoading])
 
 
   const [renderSwitch, setRenderSwitch] = useState(1);

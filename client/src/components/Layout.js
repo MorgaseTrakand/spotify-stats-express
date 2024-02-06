@@ -45,7 +45,7 @@ const Layout = ({ children }) => {
       const response = await fetch(`http://localhost:5000/refresh_token?refresh_token=${refresh_token}`);
       const responseData = await response.json();
 
-      if (responseData.status != 200) {
+      if (responseData.status !== 200) {
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
         localStorage.removeItem("username")

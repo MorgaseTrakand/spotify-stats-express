@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './allCards.css'; // Add this line
 
 const ArtistCard = ({ imageSrc, artistName, position, id }) => {
