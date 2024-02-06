@@ -49,7 +49,6 @@ const gatherUserData = async (access_token) => {
         'Authorization': `Bearer ${access_token}`
       }
     });
-    console.log(response.data)
     const email = response.data.email;
     const display_name = response.data.display_name;
     const id = response.data.id;
@@ -113,7 +112,7 @@ app.get('/callback', csrfProtection, async (req, res) => {
 app.get('/user-data', csrfProtection, async (req, res) => {
   try {
     const access_token = req.query.access_token;
-    const limit = 100;
+    const limit = 200;
     const data = {
       songs: [],
       artists: [],
@@ -155,7 +154,7 @@ app.get('/user-data', csrfProtection, async (req, res) => {
           name: artist.name,
           image: artist.images,
           id: artist.id,
-          genres: artist.genres
+          genres: artist.genres,
         }));
         data.artists = topArtists;
       });
@@ -181,6 +180,23 @@ app.get('/user-data', csrfProtection, async (req, res) => {
     data.genres = capitalizedGenreArray;
 
     // Calculate top albums here
+    const albumCounts = {};
+    data.songs.forEach(song => {
+      if (song.albums.album_type == "ALBUM") {
+        var tempArray = [song.albums.name, song.albums.images[0].url, song.albums.artists[0].name]
+        albumCounts[tempArray] = (albumCounts[tempArray] || 0) + 1;
+      }
+    })
+
+    const albumArray = Object.entries(albumCounts);
+    const sortedAlbumArray = albumArray.sort((a, b) => b[1] - a[1]);
+
+    sortedAlbumArray.forEach((album, index) => {
+      const parts = album[0].split(',');
+      sortedAlbumArray[index] = parts;
+    })
+
+    data.albums = sortedAlbumArray;
 
     // Send the response
     res.json(data);
@@ -207,7 +223,7 @@ app.get('/token_valid', csrfProtection, async (req, res) => {
       res.json( {"valid": isValid} );
     }
   } catch (error) {
-    console.error("Error in Axios request:", error);
+    // console.error("Error in Axios request:", error);
 
     // Check if the error is due to an invalid access token
     if (error.response && error.response.status === 401) {

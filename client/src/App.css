@@ -40,7 +40,7 @@
   bottom: -115vh;
   right: -15vh;
 }
-.blue {
+.blue, .auth-blue {
   background: rgba(17, 66, 241, 0.25);
   top: -110vh;
   left: -15vh;
@@ -252,7 +252,7 @@
 }
 .glassmorphism-test {
   background-color: #16232d;
-  height: 120px;
+  height: 60px;
   width: 97%;
   border-radius: 12px;
   margin-top: 2vh;
@@ -282,7 +282,7 @@
   display: flex;
   justify-content: space-between;
   padding: 0 1.5%;
-  margin-top: 8vh;
+  margin-top: 6vh;
 }
 .image-carosel {
   height: 35vh;
@@ -311,13 +311,6 @@
 }
 .img-custom-margin {
   margin: 0 -3vh;
-}
-.account-container {
-  height: 20vh;
-  width: 100%;
-  background-color: #16232d;
-  border-radius: 12px;
-  margin-top: 20vh;
 }
 .song-component-container {
   display: flex;
@@ -440,6 +433,10 @@
     font-size: 12px
   }
 }
+
+
+
+/*  LOADING CSS */
 .solo-component {
   width: 75%;
 }
@@ -489,4 +486,55 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+
+/* RESPONSIVNESS DASHBOARD */
+@media screen and (max-width: 1200px) {
+  .auth-header {
+    width: 90%;
+    margin-left: 5%;
+  }
+  .main-auth-container {
+    width: 90%;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .positioning-div h1 {
+    margin-left: 50px;
+  }
+  .dashboard-flexbox-container {
+    flex-direction: column;
+  }
+  .topArtists-container, .album-container, .genre-container {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 800px) {
+  .positioning-div h1 {
+    margin-left: 40px;
+    font-size: 14px;
+  }
+}
+
+/* ACCOUNT CSS */ 
+.main-account-container {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+.account-container {
+  height: auto;
+  width: 100%;
+  background-color: #16232d;
+  border-radius: 12px;
+  margin-top: 20vh;
+  padding: 8px 30px;
+}
+.account-container h1 {
+  font-family: "Open Sans";
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }

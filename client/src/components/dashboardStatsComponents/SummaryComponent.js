@@ -1,9 +1,10 @@
 import ArtistCard from '../../pages/artistCard';
 import TrackCard from '../../pages/trackCard'; 
 import GenreCard from '../../pages/genreCard';
+import AlbumCard from '../../pages/albumCard';
 import { useEffect, useState } from 'react';
 
-function SummaryComponent({ artistsData, trackData, genreData }) {
+function SummaryComponent({ artistsData, trackData, genreData, albumData }) {
   const [img1URL, setimg1URL] = useState();
   const [img2URL, setimg2URL] = useState();
   const [img3URL, setimg3URL] = useState();
@@ -76,7 +77,17 @@ function SummaryComponent({ artistsData, trackData, genreData }) {
           <div className='dashboard-flexbox-container'>
             <div className='album-container'>
               <h1 className='stat-label'>Top Albums</h1>
-              <div className='albums'></div>
+              <div className='albums'>
+                {albumData.slice(0, 10).map((album, index) => (
+                  <AlbumCard
+                    key={index}
+                    artistName={album[2]}
+                    albumName={album[0]}
+                    imageSrc={album[1]}
+                    position={index + 1}
+                  />
+                ))}
+              </div>
             </div>
             <div className='genre-container'>
               <h1 className='stat-label'>Top Genres</h1>
