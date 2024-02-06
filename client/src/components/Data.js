@@ -21,7 +21,7 @@ const DataWrapper = ({ children }) => {
   function hasAccessToken() {
     const access_token = localStorage.getItem("access_token")
 
-    genreTest(access_token)
+    gatherData(access_token)
   }
   
   function noAccessToken() {
@@ -34,10 +34,10 @@ const DataWrapper = ({ children }) => {
     const username = params.get('username');
     localStorage.setItem('username', username)
 
-    genreTest(access_token)
+    gatherData(access_token)
   }
 
-  function genreTest(access_token) {
+  function gatherData(access_token) {
     if (trackData[0]) {
       console.log("already has set data in react context")
       return;

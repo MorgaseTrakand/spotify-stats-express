@@ -14,6 +14,7 @@ const Layout = ({ children }) => {
   const navigate = useNavigate();
 
   async function handleFailedRefresh() {
+    console.log("handled failed refresh, refresh failed")
     fetch('http://localhost:5000/login')
     .then(response => {
       if (!response.ok) {
@@ -24,7 +25,7 @@ const Layout = ({ children }) => {
     .then(data => {
       window.location.href = data.authUrl;
     })
-    .catch(error => {
+    .catch(error => {   
       console.error('Fetch error:', error);
     });
   }
@@ -32,27 +33,22 @@ const Layout = ({ children }) => {
   const logout = useCallback(() => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
+    localStorage.removeItem("username")
     navigate('/');
   }, [navigate]);
 
 
   const refreshToken = useCallback(async (refresh_token) => {
-    console.log("refresh token:" + refresh_token)
+    console.log("refresh token: " + refresh_token)
 
     try {
       const response = await fetch(`http://localhost:5000/refresh_token?refresh_token=${refresh_token}`);
-      if (!response.ok) {
-        logout()
-        throw new Error(`Failed to refresh token: ${response.statusText}`);
-      }
-  
       const responseData = await response.json();
 
-      console.log("response data" +responseData.access_token)
-      if (responseData.access_token == undefined) {
-        console.log("refresh failed")
+      if (responseData.status != 200) {
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
+        localStorage.removeItem("username")
         handleFailedRefresh();
       }
       else {
@@ -61,7 +57,6 @@ const Layout = ({ children }) => {
       }
     } catch (error) {
       console.log(error)
-      console.log("did not refresh")
       logout();
     }  }, [logout]);
 
