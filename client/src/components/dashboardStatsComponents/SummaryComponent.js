@@ -3,6 +3,8 @@ import TrackCard from '../../pages/trackCard';
 import GenreCard from '../../pages/genreCard';
 import AlbumCard from '../../pages/albumCard';
 import { useEffect, useState } from 'react';
+import Dropdown from '../Dropdown';
+
 
 function SummaryComponent({ artistsData, trackData, genreData, albumData }) {
   const [img1URL, setimg1URL] = useState();
@@ -12,6 +14,8 @@ function SummaryComponent({ artistsData, trackData, genreData, albumData }) {
   const [trackimg1URL, settrackimg1URL] = useState();
   const [trackimg2URL, settrackimg2URL] = useState();
   const [trackimg3URL, settrackimg3URL] = useState();
+
+  const options = ['Short Term', 'Option 2', 'Long Term'];
 
 
   useEffect(() => {
@@ -30,7 +34,7 @@ function SummaryComponent({ artistsData, trackData, genreData, albumData }) {
   return (
     <div className='outlined-stats-container'>
       <div className='glassmorphism-test'>
-
+        <Dropdown options={options} />
       </div>
 
       <div className='dashboard-flexbox-container'>
@@ -53,7 +57,7 @@ function SummaryComponent({ artistsData, trackData, genreData, albumData }) {
             ))}
           </div>
           </div>
-            <div className='topArtists-container'>
+            <div className='topArtists-container flex-wrap-margin'>
               <h1 className='stat-label'>Top Tracks</h1>
               <div className='topArtists'>
                 <div className='image-carosel'>
@@ -89,7 +93,7 @@ function SummaryComponent({ artistsData, trackData, genreData, albumData }) {
                 ))}
               </div>
             </div>
-            <div className='genre-container'>
+            <div className='genre-container flex-wrap-margin'>
               <h1 className='stat-label'>Top Genres</h1>
               <div className='genres'>
                 {genreData.slice(0, 10).map((genre, index) => (

@@ -9,11 +9,12 @@ import ArtistComponent from '../components/dashboardStatsComponents/ArtistCompon
 import AlbumComponent from '../components/dashboardStatsComponents/AlbumComponent'; 
 import GenreComponent from '../components/dashboardStatsComponents/GenreComponent';
 import AuthHeader from '../components/AuthHeader';
-
+import Footer from '../components/Footer';
 
 function AuthorizedPage() {
   const [isLoading, setIsLoading] = useState(true);
-  const { artistsData, trackData, genreData, albumData} = useDataContext();
+  const { artistsData, trackData, genreData, albumData, userData} = useDataContext();
+  const username = userData[1]
 
   useEffect(() => {
     const spinner = document.querySelector(".lds-ring");
@@ -68,11 +69,10 @@ function AuthorizedPage() {
 
           <div className='main-auth-container'>
           <AuthHeader />
-
             <div className='main-stats-container'>
               <div className='label-container'>
-                <h1 className='username focus'>{localStorage.getItem('username')}</h1>
-                <div className='positioning-div'>
+                <h1 className='username focus'>{username}</h1>
+                <div className='positioning-div label-container-positioning'>
                   {[1, 2, 3, 4, 5].map((label) => (
                     <h1
                       key={label}
@@ -99,6 +99,7 @@ function AuthorizedPage() {
                   <GenreComponent genreData={genreData} />
                 )}
               </div>
+              <Footer />
             </div>
           </div>
         </div>

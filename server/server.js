@@ -99,8 +99,7 @@ app.get('/callback', csrfProtection, async (req, res) => {
 
       const userData = await gatherUserData(access_token)
       await handleDBCheckingAndPopulation(email=userData.email, display_name=userData.display_name, id=userData.id)
-      redirect_url = 'http://localhost:3000/dashboard?access_token='+access_token+"&refresh_token="+refresh_token+"&username="+userData.display_name
-
+      redirect_url = 'http://localhost:3000/dashboard?access_token='+access_token+"&refresh_token="+refresh_token
       res.redirect(redirect_url);
   }
   catch (error) {
@@ -114,6 +113,7 @@ app.get('/user-data', csrfProtection, async (req, res) => {
     const access_token = req.query.access_token;
     const limit = 200;
     const data = {
+      user: [],
       songs: [],
       artists: [],
       albums: [],
@@ -121,6 +121,10 @@ app.get('/user-data', csrfProtection, async (req, res) => {
       song_popularity: [],
       artist_popularity: [],
     };
+
+    //fetch user data
+    const userData = await gatherUserData(access_token)
+    data.user = [email=userData.email, display_name=userData.display_name, id=userData.id]
 
     // Fetch top 50 songs
     await axios.get('https://api.spotify.com/v1/me/top/tracks?&limit='+limit+"&time_range=long_term", {

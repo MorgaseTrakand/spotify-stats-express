@@ -7,7 +7,7 @@ import { useDataContext } from '../DataContext';
 It basically saves the page.js files from clutter so that the focus for those files can be UI only
 */ 
 const DataWrapper = ({ children }) => {
-  const { trackData, setArtistsData, setTrackData, setGenreData, setAlbumData } = useDataContext();
+  const { trackData, setArtistsData, setTrackData, setGenreData, setAlbumData, setUserData } = useDataContext();
 
   useEffect(() => {
     if (localStorage.getItem("access_token")) {
@@ -25,16 +25,11 @@ const DataWrapper = ({ children }) => {
   }
   
   function noAccessToken() {
-    const queryString = window.location.search; 
-    const params = new URLSearchParams(queryString);
-    const access_token = params.get('access_token');
-    const refresh_token = params.get('refresh_token');
-    localStorage.setItem('access_token', access_token);
-    localStorage.setItem('refresh_token', refresh_token)
-    const username = params.get('username');
-    localStorage.setItem('username', username)
+    const params = new URLSearchParams(window.location.search);
+    localStorage.setItem('access_token', params.get('access_token'));
+    localStorage.setItem('refresh_token', params.get('refresh_token'))
 
-    gatherData(access_token)
+    gatherData(localStorage.getItem('access_token'))
   }
 
   function gatherData(access_token) {
@@ -54,6 +49,7 @@ const DataWrapper = ({ children }) => {
       setArtistsData(data.artists) 
       setGenreData(data.genres) 
       setAlbumData(data.albums)
+      setUserData(data.user)
     })
     .catch(error => {
       console.error('Fetch error:', error);

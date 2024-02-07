@@ -7,7 +7,7 @@ function SongsComponent({ trackData }) {
       <div className='glassmorphism-test'>
 
       </div>
-
+      
       <div className='dashboard-flexbox-container'>
         <div className='topArtists-container solo-component'>
           <h1 className='stat-label focus'>Top Tracks</h1>  
@@ -25,7 +25,6 @@ function SongsComponent({ trackData }) {
              </div>
             </div>
           </div>
-    
         </div>
   );
 }
