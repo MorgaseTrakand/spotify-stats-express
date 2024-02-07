@@ -176,13 +176,6 @@
   transition: 0.4s all;
   transform: scale(0.80);
 }
-.card3D:hover {
-  /* transform: scale(1); */
-  /* transform: rotateX(10deg);
-  transform: rotateY(10deg); */
-  /* transform: rotateZ(1deg); */
-}
-
 
 /* AUTH PAGE */
 .positioning-div {
@@ -675,7 +668,7 @@ h1, h2, h3 {
   z-index: 0;
 }
 .btn-secondary:hover {
-  background-color: #1ba543;
+  background-color: #102516;
 }
 .btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active {
   background-color: #1ba543;

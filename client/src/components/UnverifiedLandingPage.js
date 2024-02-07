@@ -35,7 +35,7 @@ function UnverifiedComponent() {
   
           <div className='main-landing-container'>
             <UnverifiedHeader handleClick={handleClick}/>
-            <div className='left-container'>
+            <div className='left-container focus'>
               <div className='empty-spacing-div'></div>
               <div className='middle-div'>
                 <h1 className='heading focus'>

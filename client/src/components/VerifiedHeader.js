@@ -13,7 +13,7 @@ function VerifiedHeader() {
       navigate('/dashboard')
     }
     return (
-        <header className='landing-header'>
+        <header className='landing-header focus'>
             <h1 onClick={handleLogo} className='logo'><span className='green-text'>Spotify</span>Stats</h1>
             <div className='positioning-div'>
               <h2 onClick={handleAccount}>Account</h2>

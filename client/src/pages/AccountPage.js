@@ -7,7 +7,7 @@ import { useDataContext } from '../DataContext';
 
 function AccountPage() {
   const navigate = useNavigate();
-  const { userData } = useDataContext();
+  const { userData, resetContext } = useDataContext();
 
   const username = userData[1]
   const email = userData[0]
@@ -16,6 +16,7 @@ function AccountPage() {
   function handleLogout() {
     localStorage.removeItem("access_token")
     localStorage.removeItem("refresh_token")
+    resetContext();
     navigate('/')
   }
 
