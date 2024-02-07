@@ -20,18 +20,32 @@ function AccountPage() {
   }
 
   return (
-    <div className='hero'>
+    <div className='account-hero'>
       <div className='shadow blue'></div>
+      <div className='shadow blue2'></div>
+      <div className='shadow blue3'></div>
+      <div className='shadow blue4'></div>
+
       <div className='main-account-container'>
         <AuthHeader />
         <div className='account-container'>
           <h1 className='focus'>Spotify Account</h1>
-          <h2 className='focus'>Username: {username}</h2>
-          <h2 className='focus'>Email: {email}</h2>
-          <h2 className='focus'>Spotify ID: {ID}</h2>
-        </div>
-        <div className='account-container no-margin'>
-          <button className='focus' onClick={handleLogout}>Logout</button>
+          <div className='account-left-margin'>
+            <h2 className='focus'>Account that you logged in with</h2>
+          </div>
+          <h2 className='account-margin-bottom focus'><span className='light-grey'>Username:</span> 
+            <br/>
+            {username}
+          </h2>
+          <h2 className='account-margin-bottom focus'><span className='light-grey'>Email:</span> 
+            <br/>
+            {email}
+          </h2>
+          <h2 className='account-margin-bottom focus'><span className='light-grey'>Spotify ID:</span> 
+            <br/>
+            {ID}
+          </h2>
+          <button className='cta-button focus account-button' onClick={handleLogout}>Logout</button>
         </div>
       </div>
     </div>

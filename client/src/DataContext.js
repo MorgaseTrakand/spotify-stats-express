@@ -8,9 +8,10 @@ export const DataProvider = ({ children }) => {
   const [genreData, setGenreData] = useState([]);
   const [albumData, setAlbumData] = useState([]);
   const [userData, setUserData] = useState([]);
+  const [term, setTerm] = useState("long_term")
 
   return (
-    <DataContext.Provider value={{ artistsData, setArtistsData, trackData, setTrackData, genreData, setGenreData, albumData, setAlbumData, userData, setUserData }}>
+    <DataContext.Provider value={{ term, setTerm, artistsData, setArtistsData, trackData, setTrackData, genreData, setGenreData, albumData, setAlbumData, userData, setUserData }}>
       {children}
     </DataContext.Provider>
   );

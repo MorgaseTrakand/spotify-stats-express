@@ -21,6 +21,10 @@ function AlbumComponent({ albumData }) {
             ))}
           </div>
         </div>
+        <div className='bento-box-container'>
+          <div className='bento-box first-box'></div>
+          <div className='bento-box'></div>
+        </div>
       </div>
     </div>
   );

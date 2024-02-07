@@ -8,7 +8,7 @@
   --text: #FFF;
   --main: #11C545;
 }
-.hero {
+.hero, .account-hero {
   height: 100vh;
   width: 100%;
   background-color: #060F16;
@@ -18,6 +18,9 @@
   flex-direction: column;
   position: relative;
   overflow-x: hidden;
+}
+.account-hero {
+  overflow-y: hidden;
 }
 .main-landing-container, .main-auth-container {
   width: 80%;
@@ -43,8 +46,23 @@
 }
 .blue, .auth-blue {
   background: rgba(17, 66, 241, 0.25);
-  top: -110vh;
+  top: -145vh;
   left: -15vh;
+}
+.blue2 {
+  background: rgba(17, 66, 241, 0.25);
+  top: -145vh;
+  right: -30vh;
+}
+.blue3 {
+  background: rgba(17, 66, 241, 0.25);
+  bottom: -150vh;
+  right: -15vh;
+}
+.blue4 {
+  background: rgba(17, 66, 241, 0.25);
+  bottom: -150vh;
+  left: -30vh;
 }
 .purple {
   background: rgba(190, 54, 254, 0.3);
@@ -438,8 +456,8 @@
 
 
 /*  LOADING CSS */
-.solo-component {
-  width: 75%;
+.solo-component-genre {
+  width: 100%;
 }
 .add-blur {
   background-color: black;
@@ -507,8 +525,8 @@
   .dashboard-flexbox-container {
     flex-direction: column;
   }
-  .topArtists-container, .album-container, .genre-container {
-    width: 100%;
+  .solo-component, .album-container, .genre-container {
+    width: 100% !important;
   }
   .flex-wrap-margin {
     margin-top: 50px;
@@ -555,6 +573,28 @@
 }
 
 /* ACCOUNT CSS */ 
+.account-left-margin {
+  margin-left: 20px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+.account-margin-bottom {
+  margin-bottom: 10px;
+}
+.account-left-margin h2, .light-grey {
+  color: rgba(255, 255, 255, 0.75);
+}
+.account-button {
+  margin-top: 30px;
+  width: 120px;
+  color: #7D0A0A;
+  color: rgb(220, 220, 220);
+  background-color: rgb(38, 38, 38);
+  background-color: #271815;
+  background-color: #4f1212;
+  font-weight: 600;
+  box-shadow: none;
+}
 .footer-div {
   height: 50px;
   width: 100%;
@@ -577,9 +617,29 @@
   font-family: "Open Sans";
   font-size: 32px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 800;
   line-height: normal;
 }
 .no-margin {
   margin-top: 50px;
+}
+
+
+/* BENTO CSS */
+.solo-component {
+  width: 75%;
+}
+.bento-box-container {
+  width: 23%;
+  height: 500px;
+}
+.first-box {
+  margin-top: 36px;
+}
+.bento-box {
+  width: 100%;
+  height: 159px;
+  background-color: #16232d;
+  border-radius: 12px;
+  margin-bottom: 20px;
 }

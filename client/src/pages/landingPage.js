@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import '../App.css';
 import VerifiedComponent from '../components/VerifiedLandingPage';
 import UnverifiedComponent from '../components/UnverifiedLandingPage';
-
+import { useDataContext } from '../DataContext';
 
 
 function LandingPage() {
   const [verified, setVerified] = useState(false);
+  const { trackData } = useDataContext();
 
   async function validate(access_token) {
     try {
@@ -39,6 +40,9 @@ function LandingPage() {
           setVerified(true)
         }
       })
+    }
+    if (trackData[0]) {
+      setVerified(true)
     }
   }, []);
 

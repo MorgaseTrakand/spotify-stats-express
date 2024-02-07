@@ -66,6 +66,7 @@ function AuthorizedPage() {
           {/* <div className='shadow purple'></div>
           <div className='shadow red'></div> */}
           <div className='shadow auth-blue'></div>
+          <div className='shadow blue2'></div>
 
           <div className='main-auth-container'>
           <AuthHeader />

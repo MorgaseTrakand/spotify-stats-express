@@ -7,7 +7,7 @@ import { useDataContext } from '../DataContext';
 It basically saves the page.js files from clutter so that the focus for those files can be UI only
 */ 
 const DataWrapper = ({ children }) => {
-  const { trackData, setArtistsData, setTrackData, setGenreData, setAlbumData, setUserData } = useDataContext();
+  const { trackData, setArtistsData, setTrackData, setGenreData, setAlbumData, setUserData, term } = useDataContext();
 
   useEffect(() => {
     if (localStorage.getItem("access_token")) {
@@ -16,7 +16,7 @@ const DataWrapper = ({ children }) => {
     else {
       noAccessToken();
     }
-  }, []);
+  }, [term]);
 
   function hasAccessToken() {
     const access_token = localStorage.getItem("access_token")
@@ -37,7 +37,7 @@ const DataWrapper = ({ children }) => {
       console.log("already has set data in react context")
       return;
     }
-    fetch(`http://localhost:5000/user-data?access_token=${access_token}`)
+    fetch(`http://localhost:5000/user-data?access_token=${access_token}&term=${term}`)
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');

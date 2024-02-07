@@ -18,19 +18,14 @@ const Dropdown = ({ options }) => {
       <button className="dropdown-btn" onClick={handleDropdownClick}>
         Click
       </button>
-      {isOpen && (
+      {isOpen ? (
         <div className="dropdown-content">
-          {options.map(option => (
-            <div>
-              <div key={option} className="dropdown-option" onClick={() => handleOptionClick(option)}>
-                {option}
-              </div>
-              <div key={option} className="dropdown-option" onClick={() => handleOptionClick(option)}>
-                {option}
-              </div>
-            </div>
-          ))}
+          <div>Long Term</div>
+          <div>Medium Term</div>
+          <div>Short Term</div>
         </div>
+      ) : (
+        <div></div>
       )}
     </div>
   );

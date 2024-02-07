@@ -111,7 +111,9 @@ app.get('/callback', csrfProtection, async (req, res) => {
 app.get('/user-data', csrfProtection, async (req, res) => {
   try {
     const access_token = req.query.access_token;
-    const limit = 200;
+    const term = req.query.term;
+
+    const limit = 50;
     const data = {
       user: [],
       songs: [],
@@ -127,7 +129,7 @@ app.get('/user-data', csrfProtection, async (req, res) => {
     data.user = [email=userData.email, display_name=userData.display_name, id=userData.id]
 
     // Fetch top 50 songs
-    await axios.get('https://api.spotify.com/v1/me/top/tracks?&limit='+limit+"&time_range=long_term", {
+    await axios.get('https://api.spotify.com/v1/me/top/tracks?&limit='+limit+"&time_range="+term, {
       headers: {
         'Authorization': `Bearer ${access_token}`
       }
@@ -192,7 +194,7 @@ app.get('/user-data', csrfProtection, async (req, res) => {
       }
     })
 
-    const albumArray = Object.entries(albumCounts);
+    const albumArray = Object.entries(albumCounts); 
     const sortedAlbumArray = albumArray.sort((a, b) => b[1] - a[1]);
 
     sortedAlbumArray.forEach((album, index) => {
