@@ -1,11 +1,12 @@
 import TrackCard from '../../pages/trackCard'; 
+import DropDown from "../DropDown"
 
 function SongsComponent({ trackData }) {
 
   return (
     <div className='outlined-stats-container'>
       <div className='glassmorphism-test'>
-
+        <DropDown />
       </div>
       
       <div className='dashboard-flexbox-container'>

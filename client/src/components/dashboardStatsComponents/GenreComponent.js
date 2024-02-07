@@ -1,10 +1,13 @@
 import GenreCard from "../../pages/genreCard";
+import DropDown from "../DropDown"
 
 function GenreComponent({ genreData }) {
   
   return (
     <div className='outlined-stats-container'>
-      <div className='glassmorphism-test'></div>
+      <div className='glassmorphism-test'>
+        <DropDown />
+      </div>
 
       <div className='dashboard-flexbox-container'>
         <div className='topArtists-container solo-component-genre'>

@@ -10,6 +10,9 @@ const DataWrapper = ({ children }) => {
   const { trackData, setArtistsData, setTrackData, setGenreData, setAlbumData, setUserData, term } = useDataContext();
 
   useEffect(() => {
+    console.log("rerun?")
+    console.log(term)
+    console.log("--------")
     if (localStorage.getItem("access_token")) {
       hasAccessToken();
     }
@@ -20,8 +23,8 @@ const DataWrapper = ({ children }) => {
 
   function hasAccessToken() {
     const access_token = localStorage.getItem("access_token")
-
-    gatherData(access_token, "short_term")
+    console.log("hasAccesstoken")
+    gatherData(access_token, term)
   }
   
   function noAccessToken() {
@@ -29,14 +32,14 @@ const DataWrapper = ({ children }) => {
     localStorage.setItem('access_token', params.get('access_token'));
     localStorage.setItem('refresh_token', params.get('refresh_token'))
 
-    gatherData(localStorage.getItem('access_token'), "short_term")
+    gatherData(localStorage.getItem('access_token'), term)
   }
 
-  function gatherData(access_token) {
-    if (trackData[0]) {
-      console.log("already has set data in react context")
-      return;
-    }
+  function gatherData(access_token, term) {
+    // if (trackData[0]) {
+    //   console.log("already has set data in react context")
+    //   return;
+    // }
     fetch(`http://localhost:5000/user-data?access_token=${access_token}&term=${term}`)
     .then(response => {
       if (!response.ok) {
@@ -50,6 +53,12 @@ const DataWrapper = ({ children }) => {
       setGenreData(data.genres) 
       setAlbumData(data.albums)
       setUserData(data.user)
+      console.log("updating data")
+
+      const spinner = document.querySelector(".lds-ring");
+      const outlinedContainer = document.querySelector(".outlined-stats-container");
+      spinner.classList.add("display-none");
+      outlinedContainer.classList.remove("add-blur");
     })
     .catch(error => {
       console.error('Fetch error:', error);

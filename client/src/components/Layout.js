@@ -39,8 +39,6 @@ const Layout = ({ children }) => {
 
 
   const refreshToken = useCallback(async (refresh_token) => {
-    console.log("refresh token: " + refresh_token)
-
     try {
       const response = await fetch(`http://localhost:5000/refresh_token?refresh_token=${refresh_token}`);
       const responseData = await response.json();
@@ -63,15 +61,11 @@ const Layout = ({ children }) => {
 
   const validate = useCallback(async (access_token) => {
     try {
-      console.log("entering validate function")
-      console.log("validate checking "+access_token)
-
       const response = await fetch(`http://localhost:5000/token_valid?access_token=${access_token}`);
       const data = await response.json();
       const trueOrFalse = data.valid;
 
       if (trueOrFalse) {
-        console.log("token validated")
         return true;
       } else {
         return false;

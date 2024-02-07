@@ -13,12 +13,12 @@ import Footer from '../components/Footer';
 
 function AuthorizedPage() {
   const [isLoading, setIsLoading] = useState(true);
-  const { artistsData, trackData, genreData, albumData, userData} = useDataContext();
+  const { artistsData, trackData, genreData, albumData, userData, setTerm} = useDataContext();
   const username = userData[1]
 
   useEffect(() => {
     const spinner = document.querySelector(".lds-ring");
-    const outlinedContainer = document.querySelector(".outlined-stats-container")
+    const outlinedContainer = document.querySelector(".outlined-stats-container");
 
     if (artistsData[0] && albumData[0] && artistsData[0] && genreData[0]) {
       setIsLoading(false)
@@ -89,15 +89,15 @@ function AuthorizedPage() {
               <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
               <div className='outlined-stats-container add-blur'>
                 {renderSwitch === 1 ? (
-                  <SummaryComponent trackData={trackData} artistsData={artistsData} genreData={genreData} albumData={albumData} />
+                  <SummaryComponent trackData={trackData} artistsData={artistsData} genreData={genreData} albumData={albumData} setTerm={setTerm} />
                 ) : renderSwitch === 2 ? (
-                  <SongsComponent trackData={trackData} />
+                  <SongsComponent trackData={trackData} setTerm={setTerm} />
                 ) : renderSwitch === 3 ? (
-                  <ArtistComponent artistsData={artistsData} />
+                  <ArtistComponent artistsData={artistsData} setTerm={setTerm} />
                 ) : renderSwitch === 4 ? (
-                  <AlbumComponent albumData={albumData} />
+                  <AlbumComponent albumData={albumData} setTerm={setTerm} />
                 ) : (
-                  <GenreComponent genreData={genreData} />
+                  <GenreComponent genreData={genreData} setTerm={setTerm} />
                 )}
               </div>
               <Footer />

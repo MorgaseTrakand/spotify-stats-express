@@ -1,10 +1,13 @@
 import AlbumCard from "../../pages/albumCard";
+import DropDown from "../DropDown"
 
-function AlbumComponent({ albumData }) {
+function AlbumComponent({ albumData, setTerm}) {
   
   return (
     <div className='outlined-stats-container'>
-      <div className='glassmorphism-test'></div>
+      <div className='glassmorphism-test'>
+        <DropDown setTerm={setTerm}/>
+      </div>
 
       <div className='dashboard-flexbox-container'>
         <div className='topArtists-container solo-component-genre'>

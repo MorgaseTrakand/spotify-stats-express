@@ -3,9 +3,10 @@ import TrackCard from '../../pages/trackCard';
 import GenreCard from '../../pages/genreCard';
 import AlbumCard from '../../pages/albumCard';
 import { useEffect, useState } from 'react';
+import DropDown from "../DropDown"
 
 
-function SummaryComponent({ artistsData, trackData, genreData, albumData }) {
+function SummaryComponent({ artistsData, trackData, genreData, albumData, setTerm }) {
   const [img1URL, setimg1URL] = useState();
   const [img2URL, setimg2URL] = useState();
   const [img3URL, setimg3URL] = useState();
@@ -13,9 +14,6 @@ function SummaryComponent({ artistsData, trackData, genreData, albumData }) {
   const [trackimg1URL, settrackimg1URL] = useState();
   const [trackimg2URL, settrackimg2URL] = useState();
   const [trackimg3URL, settrackimg3URL] = useState();
-
-  const [dropdownOption, setDropDownOption] = useState("All Time"); 
-
 
   useEffect(() => {
     if (artistsData && artistsData.length > 0 && artistsData[0].image) {
@@ -30,24 +28,10 @@ function SummaryComponent({ artistsData, trackData, genreData, albumData }) {
     }
   }, [artistsData, trackData]);
 
-  function handleDropDown(option) {
-    setDropDownOption(option)
-
-  }
-
   return (
     <div className='outlined-stats-container'>
       <div className='glassmorphism-test'>
-        <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            {dropdownOption}
-          </button>
-          <ul class="dropdown-menu">
-            <li onClick={() => handleDropDown("All Time")}><a class="dropdown-item" href="#">All Time</a></li>
-            <li onClick={() => handleDropDown("6 Months")}><a class="dropdown-item" href="#">6 Months</a></li>
-            <li onClick={() => handleDropDown("4 Weeks")}><a class="dropdown-item" href="#">4 Weeks</a></li>
-          </ul>
-        </div>
+        <DropDown />
       </div>
 
       <div className='dashboard-flexbox-container'>

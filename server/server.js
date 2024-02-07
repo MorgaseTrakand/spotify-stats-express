@@ -112,6 +112,7 @@ app.get('/user-data', csrfProtection, async (req, res) => {
   try {
     const access_token = req.query.access_token;
     const term = req.query.term;
+    console.log("runned")
 
     const limit = 50;
     const data = {
@@ -158,7 +159,7 @@ app.get('/user-data', csrfProtection, async (req, res) => {
       });
 
     // Fetch top 50 artists
-    await axios.get('https://api.spotify.com/v1/me/top/artists?&limit='+limit+"&time_range=long_term", {
+    await axios.get('https://api.spotify.com/v1/me/top/artists?&limit='+limit+"&time_range="+term, {
       headers: {
         'Authorization': `Bearer ${access_token}`
       }
@@ -232,7 +233,6 @@ app.get('/user-data', csrfProtection, async (req, res) => {
         data.song_popularity["Popular"] = currentValue + 1
       }
     })
-    console.log(data.song_popularity)
 
 
     //additional stats for artists
@@ -251,8 +251,8 @@ app.get('/user-data', csrfProtection, async (req, res) => {
         data.artist_popularity["Popular"] = currentValue + 1
       }
     })
-    console.log(data.artist_popularity)
 
+    
     // Send the response
     res.json(data);
   } catch (error) {

@@ -1,11 +1,12 @@
 import ArtistCard from '../../pages/artistCard';
+import DropDown from "../DropDown"
 
 function ArtistComponent({ artistsData }) {
   
   return (
     <div className='outlined-stats-container'>
       <div className='glassmorphism-test'>
-
+        <DropDown />
       </div>
 
       <div className='dashboard-flexbox-container'>
