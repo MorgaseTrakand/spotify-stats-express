@@ -21,10 +21,10 @@ function AccountPage() {
 
   return (
     <div className='account-hero'>
-      <div className='shadow blue'></div>
-      <div className='shadow blue2'></div>
-      <div className='shadow blue3'></div>
-      <div className='shadow blue4'></div>
+      <div className='shadoww blue'></div>
+      <div className='shadoww blue2'></div>
+      <div className='shadoww blue3'></div>
+      <div className='shadoww blue4'></div>
 
       <div className='main-account-container'>
         <AuthHeader />

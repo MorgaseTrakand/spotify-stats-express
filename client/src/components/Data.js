@@ -21,7 +21,7 @@ const DataWrapper = ({ children }) => {
   function hasAccessToken() {
     const access_token = localStorage.getItem("access_token")
 
-    gatherData(access_token)
+    gatherData(access_token, "short_term")
   }
   
   function noAccessToken() {
@@ -29,7 +29,7 @@ const DataWrapper = ({ children }) => {
     localStorage.setItem('access_token', params.get('access_token'));
     localStorage.setItem('refresh_token', params.get('refresh_token'))
 
-    gatherData(localStorage.getItem('access_token'))
+    gatherData(localStorage.getItem('access_token'), "short_term")
   }
 
   function gatherData(access_token) {

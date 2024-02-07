@@ -120,8 +120,16 @@ app.get('/user-data', csrfProtection, async (req, res) => {
       artists: [],
       albums: [],
       genres: [],
-      song_popularity: [],
-      artist_popularity: [],
+      song_popularity: {
+        Popular: 0,
+        Average: 0,
+        Obscure: 0
+      },
+      artist_popularity: {
+        Popular: 0,
+        Average: 0,
+        Obscure: 0
+      },
     };
 
     //fetch user data
@@ -143,7 +151,8 @@ app.get('/user-data', csrfProtection, async (req, res) => {
           id: track.id,
           genres: track.genres,
           popularity: track.popularity,
-          albums: track.album
+          albums: track.album,
+          length: track.duration_ms/1000
         }));
         data.songs = topTracks;
       });
@@ -161,6 +170,7 @@ app.get('/user-data', csrfProtection, async (req, res) => {
           image: artist.images,
           id: artist.id,
           genres: artist.genres,
+          popularity: artist.popularity
         }));
         data.artists = topArtists;
       });
@@ -203,6 +213,45 @@ app.get('/user-data', csrfProtection, async (req, res) => {
     })
 
     data.albums = sortedAlbumArray;
+
+
+    //additional stats for songs
+    data.songs.forEach((song) => {
+      //const length = song.
+      const tempPopularity = song.popularity
+      if (tempPopularity < 40) {
+        currentValue = data.song_popularity["Obscure"]
+        data.song_popularity["Obscure"] = currentValue + 1
+      }
+      else if (tempPopularity < 75) {
+        currentValue = data.song_popularity["Average"]
+        data.song_popularity["Average"] = currentValue + 1
+      }
+      else {
+        currentValue = data.song_popularity["Popular"]
+        data.song_popularity["Popular"] = currentValue + 1
+      }
+    })
+    console.log(data.song_popularity)
+
+
+    //additional stats for artists
+    data.artists.forEach((artist) => {
+      const tempPopularity = artist.popularity
+      if (tempPopularity < 40) {
+        currentValue = data.artist_popularity["Obscure"]
+        data.artist_popularity["Obscure"] = currentValue + 1
+      }
+      else if (tempPopularity < 75) {
+        currentValue = data.artist_popularity["Average"]
+        data.artist_popularity["Average"] = currentValue + 1
+      }
+      else {
+        currentValue = data.artist_popularity["Popular"]
+        data.artist_popularity["Popular"] = currentValue + 1
+      }
+    })
+    console.log(data.artist_popularity)
 
     // Send the response
     res.json(data);

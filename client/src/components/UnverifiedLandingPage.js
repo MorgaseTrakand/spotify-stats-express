@@ -29,9 +29,9 @@ function UnverifiedComponent() {
     return (
   <section>
         <div className='hero overflow'>
-          <div className='purple shadow'></div>
-          <div className='blue shadow'></div>
-          <div className='red shadow'></div>
+          <div className='purple shadoww'></div>
+          <div className='blue shadoww'></div>
+          <div className='red shadoww'></div>
   
           <div className='main-landing-container'>
             <UnverifiedHeader handleClick={handleClick}/>
@@ -54,8 +54,8 @@ function UnverifiedComponent() {
                 </h3>
               </div>
             </div>
-            <div className='right-container'>
-              <div className='card3D'>
+            <div className='right-container focus'>
+              <div className='card3D focus'>
                 <img className='focus' src="/3DCard.png"></img>
               </div>
             </div>

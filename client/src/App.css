@@ -30,14 +30,14 @@
 .main-landing-container { 
   width: 90%;
 }
-.shadow {
+.shadoww {
   height: 1500px;
   height: calc(150% + 2vh);
   width: 700px;
   width: calc(60% + 2vw) ;
   position: absolute;
   filter: blur(300px);
-  z-index: 0;
+  z-index: 1;
 }
 .red {
   background: rgba(213, 50, 50, 0.3);
@@ -49,8 +49,11 @@
   top: -145vh;
   left: -15vh;
 }
+.auth-blue {
+  background: rgba(17, 66, 241, 0.35);
+}
 .blue2 {
-  background: rgba(17, 66, 241, 0.25);
+  background: rgba(17, 66, 241, 0.35);
   top: -145vh;
   right: -30vh;
 }
@@ -108,8 +111,8 @@
   cursor: pointer;
 }
 .focus {
-  z-index: 100;
-  opacity: 0.999;
+  z-index: 1000;
+  opacity: 0.99;
 }
 .cta-button h1, .auth-button h2 { 
   font-family: "Open Sans";
@@ -190,11 +193,21 @@
 .positioning-div h2 {
   margin-right: 5vh;
   cursor: pointer;
+  font-family: "Open Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
 .positioning-div h1 {
   margin-left: 80px;
   cursor: pointer;
   position: relative;
+  font-family: "Open Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
 .positioning-div h1:after {
   content: "";
@@ -262,6 +275,9 @@
   font-weight: 800;
   line-height: normal;
 }
+h1, h2, h3 {
+  margin: 0;
+}
 .bottom-green-border {
   width: 100%;
   border-radius: 20px;
@@ -275,6 +291,9 @@
   border-radius: 12px;
   margin-top: 2vh;
   margin-left: 1.5%;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
 }
 
 .topArtists-container {
@@ -435,7 +454,6 @@
     width: calc(80% + 2vw) ;
     position: absolute;
     filter: blur(400px);
-    z-index: 0;
   }
   .header-cta {
     display: none;
@@ -525,7 +543,7 @@
   .dashboard-flexbox-container {
     flex-direction: column;
   }
-  .solo-component, .album-container, .genre-container {
+  .solo-component, .album-container, .genre-container, .topArtists-container {
     width: 100% !important;
   }
   .flex-wrap-margin {
@@ -583,6 +601,13 @@
 }
 .account-left-margin h2, .light-grey {
   color: rgba(255, 255, 255, 0.75);
+}
+.account-left-margin h2, .account-margin-bottom, .light-grey {
+  font-family: "Open Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
 .account-button {
   margin-top: 30px;
@@ -642,4 +667,28 @@
   background-color: #16232d;
   border-radius: 12px;
   margin-bottom: 20px;
+}
+
+/* BOOTSTRAP CUSTOM CSS */
+.btn-secondary {
+  background: var(--main);
+  z-index: 0;
+}
+.btn-secondary:hover {
+  background-color: #1ba543;
+}
+.btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active {
+  background-color: #1ba543;
+}
+.dropdown-menu {
+  background-color: #16232d;
+  --bs-dropdown-zindex: 0 !important;
+  --bs-dropdown-min-width: 0;
+}
+.dropdown-item {
+  color: var(--text);
+}
+.dropdown-item:active {
+  background-color: white;
+  color: black;
 }
