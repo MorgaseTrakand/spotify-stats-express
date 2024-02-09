@@ -7,12 +7,9 @@ import { useDataContext } from '../DataContext';
 It basically saves the page.js files from clutter so that the focus for those files can be UI only
 */ 
 const DataWrapper = ({ children }) => {
-  const { trackData, setArtistsData, setTrackData, setGenreData, setAlbumData, setUserData, term } = useDataContext();
+  const { trackData, setArtistsData, setTrackData, setGenreData, setAlbumData, setUserData, term, setSongPopularity, setArtistPopularity, setSongLength } = useDataContext();
 
   useEffect(() => {
-    console.log("rerun?")
-    console.log(term)
-    console.log("--------")
     if (localStorage.getItem("access_token")) {
       hasAccessToken();
     }
@@ -22,9 +19,10 @@ const DataWrapper = ({ children }) => {
   }, [term]);
 
   function hasAccessToken() {
+    //place validation code here
     const access_token = localStorage.getItem("access_token")
     console.log("hasAccesstoken")
-    gatherData(access_token, term)
+    gatherData(access_token)
   }
   
   function noAccessToken() {
@@ -32,14 +30,21 @@ const DataWrapper = ({ children }) => {
     localStorage.setItem('access_token', params.get('access_token'));
     localStorage.setItem('refresh_token', params.get('refresh_token'))
 
-    gatherData(localStorage.getItem('access_token'), term)
+    gatherData(localStorage.getItem('access_token'))
+  }
+  function setData(data) {
+    setTrackData(data.songs) 
+    setArtistsData(data.artists) 
+    setGenreData(data.genres) 
+    setAlbumData(data.albums)
+    setUserData(data.user)
+    setSongPopularity(data.song_popularity)
+    setArtistPopularity(data.artist_popularity)
+    setSongLength(data.song_length)
   }
 
-  function gatherData(access_token, term) {
-    // if (trackData[0]) {
-    //   console.log("already has set data in react context")
-    //   return;
-    // }
+
+  function gatherData(access_token) {
     fetch(`http://localhost:5000/user-data?access_token=${access_token}&term=${term}`)
     .then(response => {
       if (!response.ok) {
@@ -48,11 +53,7 @@ const DataWrapper = ({ children }) => {
       return response.json();
     })
     .then(data => {
-      setTrackData(data.songs) 
-      setArtistsData(data.artists) 
-      setGenreData(data.genres) 
-      setAlbumData(data.albums)
-      setUserData(data.user)
+      setData(data)
       console.log("updating data")
 
       const spinner = document.querySelector(".lds-ring");

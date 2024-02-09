@@ -112,10 +112,10 @@ app.get('/user-data', csrfProtection, async (req, res) => {
   try {
     const access_token = req.query.access_token;
     const term = req.query.term;
-    console.log("runned")
 
     const limit = 50;
     const data = {
+      currentTerm: "",
       user: [],
       songs: [],
       artists: [],
@@ -126,16 +126,24 @@ app.get('/user-data', csrfProtection, async (req, res) => {
         Average: 0,
         Obscure: 0
       },
+      song_length: {
+        Short: 0,
+        Average: 0,
+        Long: 0
+      },
       artist_popularity: {
         Popular: 0,
         Average: 0,
         Obscure: 0
       },
     };
+    data.term = term;
 
     //fetch user data
     const userData = await gatherUserData(access_token)
-    data.user = [email=userData.email, display_name=userData.display_name, id=userData.id]
+    if (userData.email) {
+      data.user = [email=userData.email, display_name=userData.display_name, id=userData.id]
+    }
 
     // Fetch top 50 songs
     await axios.get('https://api.spotify.com/v1/me/top/tracks?&limit='+limit+"&time_range="+term, {
@@ -218,8 +226,20 @@ app.get('/user-data', csrfProtection, async (req, res) => {
 
     //additional stats for songs
     data.songs.forEach((song) => {
-      //const length = song.
+      const length = song.length / 60
       const tempPopularity = song.popularity
+      if (length < 2.5) {
+        currentValue = data.song_length["Short"]
+        data.song_length["Short"] = currentValue + 1
+      }
+      else if (length < 4) {
+        currentValue = data.song_length["Average"]
+        data.song_length["Average"] = currentValue + 1
+      }
+      else {
+        currentValue = data.song_length["Long"]
+        data.song_length["Long"] = currentValue + 1
+      }
       if (tempPopularity < 40) {
         currentValue = data.song_popularity["Obscure"]
         data.song_popularity["Obscure"] = currentValue + 1
@@ -233,6 +253,7 @@ app.get('/user-data', csrfProtection, async (req, res) => {
         data.song_popularity["Popular"] = currentValue + 1
       }
     })
+    console.log(data.song_length)
 
 
     //additional stats for artists

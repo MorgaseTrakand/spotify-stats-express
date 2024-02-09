@@ -1,12 +1,12 @@
 import GenreCard from "../../pages/genreCard";
 import DropDown from "../DropDown"
 
-function GenreComponent({ genreData }) {
+function GenreComponent({ genreData, setTerm }) {
   
   return (
     <div className='outlined-stats-container'>
       <div className='glassmorphism-test'>
-        <DropDown />
+        <DropDown setTerm={setTerm} />
       </div>
 
       <div className='dashboard-flexbox-container'>

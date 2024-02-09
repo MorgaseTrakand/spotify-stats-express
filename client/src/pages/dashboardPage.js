@@ -13,7 +13,7 @@ import Footer from '../components/Footer';
 
 function AuthorizedPage() {
   const [isLoading, setIsLoading] = useState(true);
-  const { artistsData, trackData, genreData, albumData, userData, setTerm} = useDataContext();
+  const { artistsData, trackData, genreData, albumData, userData, setTerm, songPopularity, artistPopularity, songLength} = useDataContext();
   const username = userData[1]
 
   useEffect(() => {
@@ -91,9 +91,9 @@ function AuthorizedPage() {
                 {renderSwitch === 1 ? (
                   <SummaryComponent trackData={trackData} artistsData={artistsData} genreData={genreData} albumData={albumData} setTerm={setTerm} />
                 ) : renderSwitch === 2 ? (
-                  <SongsComponent trackData={trackData} setTerm={setTerm} />
+                  <SongsComponent trackData={trackData} setTerm={setTerm} songPopularity={songPopularity} songLength={songLength}/>
                 ) : renderSwitch === 3 ? (
-                  <ArtistComponent artistsData={artistsData} setTerm={setTerm} />
+                  <ArtistComponent artistPopularity={artistPopularity} artistsData={artistsData} setTerm={setTerm} />
                 ) : renderSwitch === 4 ? (
                   <AlbumComponent albumData={albumData} setTerm={setTerm} />
                 ) : (

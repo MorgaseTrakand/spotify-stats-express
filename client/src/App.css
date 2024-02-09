@@ -73,7 +73,7 @@
   left: -15vh;
 }
 
-.landing-header, .auth-header {
+.landing-header, .auth-header { 
   height: 9vh;
   width: 80%;
   margin-left: 10%;
@@ -113,6 +113,7 @@
 .focus {
   z-index: 1000;
   opacity: 0.99;
+  position: relative;
 }
 .cta-button h1, .auth-button h2 { 
   font-family: "Open Sans";
@@ -530,6 +531,9 @@ h1, h2, h3 {
   }
 }
 @media screen and (max-width: 1000px) {
+  .bento-box-container {
+    width: 40% !important;
+  }
   .positioning-div h1 {
     margin-left: 50px;
   }
@@ -551,6 +555,9 @@ h1, h2, h3 {
   .label-container {
     padding: 0 10px;
   }
+  .bento-box-container {
+    width: 50% !important;
+  }
 }
 @media screen and (max-width: 700px) {
   .label-container {
@@ -568,6 +575,9 @@ h1, h2, h3 {
   }
 }
 @media screen and (max-width: 450px) {
+  .bento-box-container {
+    width: 70% !important;
+  }
   .label-container-positioning {
     display: flex;
     flex-wrap: wrap;
@@ -677,6 +687,7 @@ h1, h2, h3 {
   background-color: #16232d;
   --bs-dropdown-zindex: 0 !important;
   --bs-dropdown-min-width: 0;
+  z-index: 10001;
 }
 .dropdown-item {
   color: var(--text);
@@ -685,3 +696,42 @@ h1, h2, h3 {
   background-color: white;
   color: black;
 }
+.green-bar {
+  height: 8px;
+  border-radius: 8px;
+  background-color: var(--main);
+}
+.bento-box h1 {
+  font-family: "Open Sans";
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  cursor: pointer;
+  margin-bottom: 24px;
+  margin-top: 5px;
+}
+.bento-box {
+  padding: 5px 10px;
+}
+.bento-box h2 {
+  font-family: "Open Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  cursor: pointer;
+  margin-bottom: 4px;
+  margin-right: 10px;
+  min-width: 65px;
+  display: flex;
+  justify-content: end;
+}
+.bento-positioning {
+  display: flex;
+  align-items: center;
+}
+.parent-bar {
+  min-width: 100%;
+}
+

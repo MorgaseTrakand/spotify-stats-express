@@ -16,6 +16,7 @@ function AccountPage() {
   function handleLogout() {
     localStorage.removeItem("access_token")
     localStorage.removeItem("refresh_token")
+    localStorage.removeItem("option")
     resetContext();
     navigate('/')
   }

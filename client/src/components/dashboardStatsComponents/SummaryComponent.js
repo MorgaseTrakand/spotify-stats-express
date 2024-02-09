@@ -3,7 +3,7 @@ import TrackCard from '../../pages/trackCard';
 import GenreCard from '../../pages/genreCard';
 import AlbumCard from '../../pages/albumCard';
 import { useEffect, useState } from 'react';
-import DropDown from "../DropDown"
+import DropDown from "../DropDown";
 
 
 function SummaryComponent({ artistsData, trackData, genreData, albumData, setTerm }) {
@@ -31,7 +31,7 @@ function SummaryComponent({ artistsData, trackData, genreData, albumData, setTer
   return (
     <div className='outlined-stats-container'>
       <div className='glassmorphism-test'>
-        <DropDown />
+        <DropDown setTerm={setTerm}/>
       </div>
 
       <div className='dashboard-flexbox-container'>

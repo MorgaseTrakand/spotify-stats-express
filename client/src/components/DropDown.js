@@ -4,6 +4,10 @@ function DropDown({ setTerm }) {
   const [dropdownOption, setDropDownOption] = useState(localStorage.getItem("option")); 
 
   function handleDropDown(option, term) {
+    if (option == localStorage.getItem('option')) {
+      console.log("same option")
+      return;
+    }
     const spinner = document.querySelector(".lds-ring");
     const outlinedContainer = document.querySelector(".outlined-stats-container");
     spinner.classList.remove("display-none");
