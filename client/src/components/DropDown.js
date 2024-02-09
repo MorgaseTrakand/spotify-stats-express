@@ -1,9 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDataContext } from "../DataContext";
 
 function DropDown({ setTerm }) {
   const [dropdownOption, setDropDownOption] = useState(localStorage.getItem("option")); 
+  const { validationHandler, setValidationHandler } = useDataContext();
+
+
+  useEffect(() => {
+    setDropDownOption(localStorage.getItem('option'))
+  })
 
   function handleDropDown(option, term) {
+    setValidationHandler(validationHandler + 1)
+    console.log(validationHandler)
     if (option == localStorage.getItem('option')) {
       console.log("same option")
       return;

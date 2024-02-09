@@ -13,7 +13,7 @@ import Footer from '../components/Footer';
 
 function AuthorizedPage() {
   const [isLoading, setIsLoading] = useState(true);
-  const { artistsData, trackData, genreData, albumData, userData, setTerm, songPopularity, artistPopularity, songLength} = useDataContext();
+  const { artistsData, trackData, genreData, albumData, userData, setTerm, songPopularity, artistPopularity, songLength } = useDataContext();
   const username = userData[1]
 
   useEffect(() => {

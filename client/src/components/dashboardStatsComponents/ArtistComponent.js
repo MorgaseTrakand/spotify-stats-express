@@ -64,7 +64,6 @@ function ArtistComponent({ artistsData, setTerm, artistPopularity }) {
                   <div className='green-bar obscure-artist'></div>
                 </div>
               </div>              
-              <div className='bento-box'></div>
             </div>
           </div>
     

@@ -27,8 +27,10 @@ const DataWrapper = ({ children }) => {
   
   function noAccessToken() {
     const params = new URLSearchParams(window.location.search);
+    console.log("no acc")
     localStorage.setItem('access_token', params.get('access_token'));
     localStorage.setItem('refresh_token', params.get('refresh_token'))
+    localStorage.setItem('option', "All Time")
 
     gatherData(localStorage.getItem('access_token'))
   }

@@ -29,13 +29,14 @@ function VerifiedComponent() {
   
     return (
   <section>
+        <VerifiedHeader />
         <div className='hero overflow'>
           <div className='purple shadoww'></div>
           <div className='blue shadoww'></div>
           <div className='red shadoww'></div>
   
           <div className='main-landing-container'>
-            <VerifiedHeader />
+            {/* <VerifiedHeader /> */}
             <div className='left-container focus'>
               <div className='empty-spacing-div'></div>
               <div className='middle-div'>

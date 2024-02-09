@@ -107,6 +107,16 @@ app.get('/callback', csrfProtection, async (req, res) => {
   }
 });
 
+app.get('/account-data', csrfProtection, async (req, res) => {
+  try {
+    const access_token = req.query.access_token;
+
+    const userData = await gatherUserData(access_token)
+    res.json(userData)
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 app.get('/user-data', csrfProtection, async (req, res) => {
   try {
@@ -141,9 +151,7 @@ app.get('/user-data', csrfProtection, async (req, res) => {
 
     //fetch user data
     const userData = await gatherUserData(access_token)
-    if (userData.email) {
-      data.user = [email=userData.email, display_name=userData.display_name, id=userData.id]
-    }
+    data.user = [email=userData.email, display_name=userData.display_name, id=userData.id]
 
     // Fetch top 50 songs
     await axios.get('https://api.spotify.com/v1/me/top/tracks?&limit='+limit+"&time_range="+term, {

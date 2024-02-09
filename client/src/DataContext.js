@@ -12,6 +12,7 @@ export const DataProvider = ({ children }) => {
   const [songPopularity, setSongPopularity] = useState([]);
   const [artistPopularity, setArtistPopularity] = useState([]);
   const [songLength, setSongLength] = useState([]);
+  const [validationHandler, setValidationHandler] = useState(1)
 
   const resetContext = () => {
     setArtistsData([]);
@@ -20,11 +21,13 @@ export const DataProvider = ({ children }) => {
     setAlbumData([]);
     setUserData([]);
     setTerm("long_term");
-    setSongPopularity([])
+    setSongPopularity([]);
+    setArtistPopularity([]);
+    setSongLength([]);
   };
 
   return (
-    <DataContext.Provider value={{ songLength, setSongLength, artistPopularity, setArtistPopularity, songPopularity, setSongPopularity, term, setTerm, artistsData, setArtistsData, trackData, setTrackData, genreData, setGenreData, albumData, setAlbumData, userData, setUserData, resetContext }}>
+    <DataContext.Provider value={{ validationHandler, setValidationHandler, songLength, setSongLength, artistPopularity, setArtistPopularity, songPopularity, setSongPopularity, term, setTerm, artistsData, setArtistsData, trackData, setTrackData, genreData, setGenreData, albumData, setAlbumData, userData, setUserData, resetContext }}>
       {children}
     </DataContext.Provider>
   );

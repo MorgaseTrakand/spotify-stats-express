@@ -12,6 +12,7 @@ if token does not exist => logout => reroute to landing page
 */ 
 const Layout = ({ children }) => {
   const navigate = useNavigate();
+  const { validationHandler, resetContext} = useDataContext();
 
   async function handleFailedRefresh() {
     console.log("handled failed refresh, refresh failed")
@@ -33,7 +34,8 @@ const Layout = ({ children }) => {
   const logout = useCallback(() => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
-    localStorage.removeItem("username")
+    localStorage.removeItem("option");
+    resetContext();
     navigate('/');
   }, [navigate]);
 
@@ -46,7 +48,7 @@ const Layout = ({ children }) => {
       if (responseData.status !== 200) {
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
-        localStorage.removeItem("username")
+        localStorage.removeItem("option")
         handleFailedRefresh();
       }
       else {
@@ -77,22 +79,20 @@ const Layout = ({ children }) => {
   }, [refreshToken, navigate]);
   const { trackData } = useDataContext();
 
+  const handleValidation = async () => {
+    const access_token = localStorage.getItem("access_token");
+    const refresh_token = localStorage.getItem("refresh_token");
+    if (access_token) {
+      if (await validate(access_token)) {
+      } else {
+        await refreshToken(refresh_token);
+      }
+    } else {
+      logout();
+    }
+  };
 
   useEffect(() => {
-    const handleValidation = async () => {
-      const access_token = localStorage.getItem("access_token");
-      const refresh_token = localStorage.getItem("refresh_token");
-      if (access_token) {
-        console.log("has access_token: "+access_token)
-        if (await validate(access_token)) {
-        } else {
-          await refreshToken(refresh_token);
-        }
-      } else {
-        logout();
-      }
-    };
-
     if (trackData[0]) {
       return;
     }
@@ -100,6 +100,11 @@ const Layout = ({ children }) => {
       handleValidation();
     }
   }, [logout, refreshToken, validate]);
+
+  useEffect(() => {
+    handleValidation();
+  }, [validationHandler])
+
 
   return (
     <div>

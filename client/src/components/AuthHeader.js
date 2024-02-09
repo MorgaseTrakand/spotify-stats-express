@@ -13,15 +13,25 @@ function AuthHeader() {
       navigate('/dashboard')
     }
     return (
-        <header className='auth-header'>
+          <header className='auth-header'>
             <h1 onClick={handleLogo} className='logo focus'><span className='green-text'>Spotify</span>Stats</h1>
             <div className='positioning-div focus'>
-              <h2 onClick={handleAccount}>Account</h2>
-              <div className='auth-button focus' onClick={handleProfile}>
-                <h2>Profile</h2>
-              </div>
+              <input id="menu-toggle" type="checkbox" />
+              <label className='menu-button-container' htmlFor="menu-toggle">
+                <div className='menu-button'></div>
+              </label>
+              <ul className="menu">
+                <li>
+                  <h2 onClick={handleAccount}>Account</h2>
+                </li>
+                <li>
+                  <div className='auth-button' onClick={handleProfile}>
+                    <h2>Profile</h2>
+                  </div>
+                </li>
+              </ul>
             </div>
-        </header>
+          </header>
     );
   }
   
