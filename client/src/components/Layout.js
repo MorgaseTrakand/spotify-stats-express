@@ -16,7 +16,7 @@ const Layout = ({ children }) => {
 
   async function handleFailedRefresh() {
     console.log("handled failed refresh, refresh failed")
-    fetch('http://localhost:5000/login')
+    fetch('https://spotify-stats-express-backend.onrender.com/login')
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -42,7 +42,7 @@ const Layout = ({ children }) => {
 
   const refreshToken = useCallback(async (refresh_token) => {
     try {
-      const response = await fetch(`http://localhost:5000/refresh_token?refresh_token=${refresh_token}`);
+      const response = await fetch(`https://spotify-stats-express-backend.onrender.com/refresh_token?refresh_token=${refresh_token}`);
       const responseData = await response.json();
 
       if (responseData.status !== 200) {
@@ -63,7 +63,7 @@ const Layout = ({ children }) => {
 
   const validate = useCallback(async (access_token) => {
     try {
-      const response = await fetch(`http://localhost:5000/token_valid?access_token=${access_token}`);
+      const response = await fetch(`https://spotify-stats-express-backend.onrender.com/token_valid?access_token=${access_token}`);
       const data = await response.json();
       const trueOrFalse = data.valid;
 

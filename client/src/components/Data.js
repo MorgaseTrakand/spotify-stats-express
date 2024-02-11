@@ -47,7 +47,7 @@ const DataWrapper = ({ children }) => {
 
 
   function gatherData(access_token) {
-    fetch(`http://localhost:5000/user-data?access_token=${access_token}&term=${term}`)
+    fetch(`https://spotify-stats-express-backend.onrender.com/user-data?access_token=${access_token}&term=${term}`)
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');

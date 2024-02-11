@@ -742,6 +742,10 @@ h1, h2, h3 {
   color: var(--main);
 }
 
+.focus2 {
+  z-index: 10000 !important;
+}
+
 .menu {
   display: flex;
   flex-direction: row;
@@ -749,7 +753,7 @@ h1, h2, h3 {
   margin: 0;
   padding: 0;
   border-radius: 12px;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0);
 }
 
 .menu > li {
@@ -808,6 +812,9 @@ h1, h2, h3 {
 }
 
 @media (max-width: 700px) {
+  .account-container {
+    margin-top: 250px;
+  }
   .menu-button-container {
     display: flex;
   }
@@ -826,6 +833,7 @@ h1, h2, h3 {
     border: 1px solid #333;
     width: 150px;
     display: block;
+    background-color: black !important;
   }
   #menu-toggle ~ .menu li {
     height: 0;

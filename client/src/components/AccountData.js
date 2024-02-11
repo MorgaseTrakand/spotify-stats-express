@@ -15,7 +15,7 @@ const AccountWrapper = ({ children }) => {
 
 
   function gatherData(access_token) {
-    fetch(`http://localhost:5000/account-data?access_token=${access_token}`)
+    fetch(`https://spotify-stats-express-backend.onrender.com/account-data?access_token=${access_token}`)
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');

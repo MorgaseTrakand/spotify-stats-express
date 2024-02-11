@@ -10,7 +10,7 @@ function UnverifiedComponent() {
         navigate('/dashboard')
       }
       else {
-        fetch('http://localhost:5000/login')
+        fetch('https://spotify-stats-express-backend.onrender.com/login')
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');

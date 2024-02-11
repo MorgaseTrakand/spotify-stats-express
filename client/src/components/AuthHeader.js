@@ -20,7 +20,7 @@ function AuthHeader() {
               <label className='menu-button-container' htmlFor="menu-toggle">
                 <div className='menu-button'></div>
               </label>
-              <ul className="menu">
+              <ul className="menu focus2 focus">
                 <li>
                   <h2 onClick={handleAccount}>Account</h2>
                 </li>
