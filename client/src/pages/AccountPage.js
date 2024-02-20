@@ -14,11 +14,18 @@ function AccountPage() {
   const ID = userData.id
 
   function handleLogout() {
-    localStorage.removeItem("access_token")
-    localStorage.removeItem("refresh_token")
+    fetch(`http://localhost:5000/logout`, {
+      method: 'GET',
+      credentials: 'include'
+    })
+    .then(
+    )
+    .catch(error => {
+      console.error('Fetch error:', error);
+    });
     localStorage.removeItem("option")
     resetContext();
-    navigate('/')
+    setTimeout(() => navigate('/'), 15);
   }
 
   return (

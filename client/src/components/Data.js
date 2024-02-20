@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { useDataContext } from '../DataContext';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 
 /* This function will serve as a higher-order component (HOC) that will wrap any page that requires the gathering of data
@@ -7,33 +9,40 @@ import { useDataContext } from '../DataContext';
 It basically saves the page.js files from clutter so that the focus for those files can be UI only
 */ 
 const DataWrapper = ({ children }) => {
-  const { trackData, setArtistsData, setTrackData, setGenreData, setAlbumData, setUserData, term, setSongPopularity, setArtistPopularity, setSongLength } = useDataContext();
+  const { setArtistsData, setTrackData, setGenreData, setAlbumData, setUserData, term, setSongPopularity, setArtistPopularity, setSongLength } = useDataContext();
+  const navigate = useNavigate()
+
+  function logout() {
+    localStorage.removeItem('option')
+    fetch('http://localhost:5000/logout')
+    navigate('/')
+  }
 
   useEffect(() => {
-    if (localStorage.getItem("access_token")) {
-      hasAccessToken();
+    if (Cookies.get('logged_in') == 'true') {
+      gatherData()
     }
     else {
       noAccessToken();
     }
   }, [term]);
-
-  function hasAccessToken() {
-    //place validation code here
-    const access_token = localStorage.getItem("access_token")
-    console.log("hasAccesstoken")
-    gatherData(access_token)
-  }
   
   function noAccessToken() {
-    const params = new URLSearchParams(window.location.search);
-    console.log("no acc")
-    localStorage.setItem('access_token', params.get('access_token'));
-    localStorage.setItem('refresh_token', params.get('refresh_token'))
-    localStorage.setItem('option', "All Time")
-
-    gatherData(localStorage.getItem('access_token'))
+    console.log("no access")
+    fetch('http://localhost:5000/refresh_token')
+    .then(response => {
+      if (response.ok) {
+        console.log("refreshed token gathering data in data.js");
+        gatherData();
+      } else {
+        logout();
+      }
+    })
+    .catch(error => {
+      console.error('Error: ', error);
+    });
   }
+
   function setData(data) {
     setTrackData(data.songs) 
     setArtistsData(data.artists) 
@@ -46,8 +55,11 @@ const DataWrapper = ({ children }) => {
   }
 
 
-  function gatherData(access_token) {
-    fetch(`https://spotify-stats-express-backend.onrender.com/user-data?access_token=${access_token}&term=${term}`)
+  function gatherData() {
+    fetch(`http://localhost:5000/user-data?term=${term}`, {
+      method: 'GET',
+      credentials: 'include'
+    })
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');

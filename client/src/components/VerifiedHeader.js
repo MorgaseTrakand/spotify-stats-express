@@ -17,10 +17,10 @@ function VerifiedHeader() {
             <h1 onClick={handleLogo} className='logo focus'><span className='green-text'>Spotify</span>Stats</h1>
             <div className='positioning-div focus'>
               <input id="menu-toggle" type="checkbox" />
-              <label class='menu-button-container' for="menu-toggle">
-                <div class='menu-button'></div>
+              <label className='menu-button-container' htmlFor="menu-toggle">
+                <div className='menu-button'></div>
               </label>
-              <ul class="menu">
+              <ul className="menu focus">
                 <li>
                   <h2 onClick={handleAccount}>Account</h2>
                 </li>

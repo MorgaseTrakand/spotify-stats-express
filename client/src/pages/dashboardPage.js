@@ -1,6 +1,5 @@
 import '../App.css';
 import React, { useState, useEffect } from 'react';
-import Layout from '../components/Layout'
 import Data from '../components/Data'
 import { useDataContext } from '../DataContext';
 import SummaryComponent from '../components/dashboardStatsComponents/SummaryComponent';
@@ -17,6 +16,7 @@ function AuthorizedPage() {
   const username = userData[1]
 
   useEffect(() => {
+    localStorage.setItem('option', 'All Time')
     const spinner = document.querySelector(".lds-ring");
     const outlinedContainer = document.querySelector(".outlined-stats-container");
 
@@ -60,52 +60,48 @@ function AuthorizedPage() {
   }
 
   return (
-    <Layout>
-      <Data>
-        <div className='hero'>
-          {/* <div className='shadow purple'></div>
-          <div className='shadow red'></div> */}
-          <div className='shadoww auth-blue'></div>
-          <div className='shadoww blue2'></div>
+    <Data>
+      <div className='hero'>
+        <div className='shadoww auth-blue'></div>
+        <div className='shadoww blue2'></div>
 
-          <div className='main-auth-container'>
-          <AuthHeader />
-            <div className='main-stats-container'>
-              <div className='label-container'>
-                <h1 className='username focus'>{username}</h1>
-                <div className='positioning-div label-container-positioning'>
-                  {[1, 2, 3, 4, 5].map((label) => (
-                    <h1
-                      key={label}
-                      className={`focus  ${labelVisibility[label] ? 'no-after' : ''}`}
-                      onClick={() => handleLabelClick(label)}
-                    >
-                      {getLabelName[label]}
-                      <div className={`bottom-green-border ${labelVisibility[label] ? '' : 'hidden'}`}></div>
-                    </h1>
-                  ))}
-                </div>
+        <div className='main-auth-container'>
+        <AuthHeader />
+          <div className='main-stats-container'>
+            <div className='label-container'>
+              <h1 className='username focus'>{username}</h1>
+              <div className='positioning-div label-container-positioning'>
+                {[1, 2, 3, 4, 5].map((label) => (
+                  <h1
+                    key={label}
+                    className={`focus  ${labelVisibility[label] ? 'no-after' : ''}`}
+                    onClick={() => handleLabelClick(label)}
+                  >
+                    {getLabelName[label]}
+                    <div className={`bottom-green-border ${labelVisibility[label] ? '' : 'hidden'}`}></div>
+                  </h1>
+                ))}
               </div>
-              <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-              <div className='outlined-stats-container add-blur'>
-                {renderSwitch === 1 ? (
-                  <SummaryComponent trackData={trackData} artistsData={artistsData} genreData={genreData} albumData={albumData} setTerm={setTerm} />
-                ) : renderSwitch === 2 ? (
-                  <SongsComponent trackData={trackData} setTerm={setTerm} songPopularity={songPopularity} songLength={songLength}/>
-                ) : renderSwitch === 3 ? (
-                  <ArtistComponent artistPopularity={artistPopularity} artistsData={artistsData} setTerm={setTerm} />
-                ) : renderSwitch === 4 ? (
-                  <AlbumComponent albumData={albumData} setTerm={setTerm} />
-                ) : (
-                  <GenreComponent genreData={genreData} setTerm={setTerm} />
-                )}
-              </div>
-              <Footer />
             </div>
+            <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+            <div className='outlined-stats-container add-blur'>
+              {renderSwitch === 1 ? (
+                <SummaryComponent trackData={trackData} artistsData={artistsData} genreData={genreData} albumData={albumData} setTerm={setTerm} />
+              ) : renderSwitch === 2 ? (
+                <SongsComponent trackData={trackData} setTerm={setTerm} songPopularity={songPopularity} songLength={songLength}/>
+              ) : renderSwitch === 3 ? (
+                <ArtistComponent artistPopularity={artistPopularity} artistsData={artistsData} setTerm={setTerm} />
+              ) : renderSwitch === 4 ? (
+                <AlbumComponent albumData={albumData} setTerm={setTerm} />
+              ) : (
+                <GenreComponent genreData={genreData} setTerm={setTerm} />
+              )}
+            </div>
+            <Footer />
           </div>
         </div>
-      </Data>
-    </Layout>
+      </div>
+    </Data>
   );
 }
 

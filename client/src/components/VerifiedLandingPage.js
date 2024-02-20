@@ -1,17 +1,17 @@
 
 import { useNavigate } from "react-router-dom";
 import VerifiedHeader from "./VerifiedHeader";
+import Cookies from "js-cookie";
 
 function VerifiedComponent() {
     const navigate = useNavigate();
   
     async function handleClick() {
-      if (localStorage.getItem("access_token")) {
-        console.log("access_token found redirecting to dashboard")
+      if (Cookies.get('logged_in') == 'true') {
         navigate('/dashboard')
       }
       else {
-        fetch('https://spotify-stats-express-backend.onrender.com/login')
+        fetch('http://localhost:5000/login')
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -37,9 +37,9 @@ function VerifiedComponent() {
   
           <div className='main-landing-container'>
             {/* <VerifiedHeader /> */}
-            <div className='left-container focus'>
+            <div className='left-container'>
               <div className='empty-spacing-div'></div>
-              <div className='middle-div'>
+              <div className='middle-div focus'>
                 <h1 className='heading focus'>
                   Unlock your Detailed and Personal Spotify Stats
                 </h1>
@@ -50,7 +50,7 @@ function VerifiedComponent() {
                   <h1>View Profile</h1>
                 </div>
               </div>
-              <div className='notice'>
+              <div className='notice focus'>
                 <h3>
                   I acknowledge that data will be collected in accordance with the Privacy Policy.
                 </h3>

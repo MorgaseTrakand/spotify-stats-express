@@ -5,25 +5,19 @@ function UnverifiedComponent() {
     const navigate = useNavigate();
   
     async function handleClick() {
-      if (localStorage.getItem("access_token")) {
-        console.log("access_token found redirecting to dashboard")
-        navigate('/dashboard')
-      }
-      else {
-        fetch('https://spotify-stats-express-backend.onrender.com/login')
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then(data => {
-          window.location.href = data.authUrl;
-        })
-        .catch(error => {
-          console.error('Fetch error:', error);
-        });
-      }
+      fetch('http://localhost:5000/login')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        window.location.href = data.authUrl;
+      })
+      .catch(error => {
+        console.error('Fetch error:', error);
+      });
     }
   
     return (

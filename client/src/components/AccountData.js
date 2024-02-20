@@ -9,26 +9,23 @@ It basically saves the page.js files from clutter so that the focus for those fi
 const AccountWrapper = ({ children }) => {
   const { setUserData } = useDataContext();
 
-  useEffect(() => {
-    gatherData(localStorage.getItem('access_token'))
-  }, []);
-
-
-  function gatherData(access_token) {
-    fetch(`https://spotify-stats-express-backend.onrender.com/account-data?access_token=${access_token}`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
+  function gatherData() {
+    fetch(`http://localhost:5000/account-data`, {
+      method: 'GET',
+      credentials: 'include'
     })
     .then(data => {
+      console.log(data)
       setUserData(data)
     })
     .catch(error => {
       console.error('Fetch error:', error);
     });
   }
+
+  useEffect(() => {
+    gatherData()
+  }, [])
 
   return (
     <div>

@@ -28,14 +28,14 @@ function DropDown({ setTerm }) {
   }
 
   return (
-    <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <div className="dropdown">
+    <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
       {dropdownOption}
     </button>
-    <ul class="dropdown-menu">
-      <li onClick={() => handleDropDown("All Time", "long_term")}><a class="dropdown-item" href="#">All Time</a></li>
-      <li onClick={() => handleDropDown("6 Months", "medium_term")}><a class="dropdown-item" href="#">6 Months</a></li>
-      <li onClick={() => handleDropDown("4 Weeks", "short_term")}><a class="dropdown-item" href="#">4 Weeks</a></li>
+    <ul className="dropdown-menu">
+      <li onClick={() => handleDropDown("All Time", "long_term")}><a className="dropdown-item" href="#">All Time</a></li>
+      <li onClick={() => handleDropDown("6 Months", "medium_term")}><a className="dropdown-item" href="#">6 Months</a></li>
+      <li onClick={() => handleDropDown("4 Weeks", "short_term")}><a className="dropdown-item" href="#">4 Weeks</a></li>
     </ul>
   </div>
   );
