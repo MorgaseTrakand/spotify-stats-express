@@ -294,6 +294,7 @@ h1, h2, h3 {
   /* 180 old px height*/
   width: 33% !important;
   height: auto !important;
+  aspect-ratio: 1 / 1;
   z-index: 5;
 }
 .second-image, .third-image {
@@ -301,9 +302,11 @@ h1, h2, h3 {
   width: 29%;
   height: auto;
   margin: 0 -2vh;
+  aspect-ratio: 1 / 1;
 }
 .round {
   border-radius: 50% !important;
+  object-fit: cover;
 }
 .img-custom-margin {
   margin: 0 -3vh;
@@ -516,6 +519,9 @@ h1, h2, h3 {
   .flex-wrap-margin {
     margin-top: 50px;
   }
+  .main-auth-container {
+    width: 95%;
+  }
 }
 @media screen and (max-width: 800px) {
   .positioning-div h1 {
@@ -530,6 +536,9 @@ h1, h2, h3 {
   }
 }
 @media screen and (max-width: 700px) {
+  .main-auth-container {
+    width: 100%;
+  }
   .unverified-cta {
     display: none;
   }

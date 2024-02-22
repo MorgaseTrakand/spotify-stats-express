@@ -1,5 +1,4 @@
 function calculateGenres(data) {
-  console.log(data)
   const genreCounts = {};
   data.artists.forEach(artist => {
     artist.genres.forEach(genre => {
@@ -21,22 +20,23 @@ function calculateGenres(data) {
 
 function calculateAlbums(data) {
   const albumCounts = {};
-    data.songs.forEach(song => {
-      if (song.albums.album_type == "ALBUM") {
-        var tempArray = [song.albums.name, song.albums.images[0].url, song.albums.artists[0].name]
-        albumCounts[tempArray] = (albumCounts[tempArray] || 0) + 1;
-      }
-    })
-
-    const albumArray = Object.entries(albumCounts); 
-    const sortedAlbumArray = albumArray.sort((a, b) => b[1] - a[1]);
-
-    sortedAlbumArray.forEach((album, index) => {
-      const parts = album[0].split(',');
-      sortedAlbumArray[index] = parts;
-    })
-    return sortedAlbumArray;
+  data.songs.forEach(song => {
+    if (song.albums.album_type === "ALBUM") {
+      var tempArray = [song.albums.name, song.albums.images[0].url, song.albums.artists[0].name];
+      var key = JSON.stringify(tempArray); // Convert array to JSON string
+      albumCounts[key] = (albumCounts[key] || 0) + 1;
+    }
+  });
+  
+  const sortedAlbumArray = Object.entries(albumCounts).sort((a, b) => b[1] - a[1]);
+  
+  sortedAlbumArray.forEach((album, index) => {
+    sortedAlbumArray[index] = JSON.parse(album[0]); // Parse JSON string back to array
+  });
+  
+  return sortedAlbumArray;
 }
+
 function calculateSongStats(data) {
   data.songs.forEach((song) => {
     const length = song.length / 60

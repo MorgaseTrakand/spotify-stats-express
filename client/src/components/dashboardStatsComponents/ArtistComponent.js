@@ -42,6 +42,7 @@ function ArtistComponent({ artistsData, setTerm, artistPopularity }) {
                   artistName={artist.name}
                   position={artist.position}
                   id={artist.id}
+                  className={index === 49 ? 'last-track' : ''}
                 />
               ))}
              </div>

@@ -20,6 +20,7 @@ function AlbumComponent({ albumData, setTerm}) {
                 albumName={album[0]}
                 imageSrc={album[1]}
                 position={index + 1}
+                className={index === 49 ? 'last-track' : ''}
               />
             ))}
           </div>

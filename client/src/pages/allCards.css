@@ -27,11 +27,12 @@
 
 /* ArtistCard.css */
 
-.track-card, .landing-track-card, .genre-card {
+.track-card, .landing-track-card {
   display: flex;
   justify-content: start;
   align-items: center;
-  height: 100px;
+  min-height: 100px;
+  height: auto;
 }
 .landing-track-card {
   height: 90px;
@@ -47,7 +48,9 @@
     border-radius: 8px;
     margin: 0 1.5vh;
 }
-
+.last-track {
+  border-bottom: none;
+}
 .track-card p, .genre-card p, .artist-card p {
   color: rgba(255, 255, 255, 0.50);
   font-family: "Open Sans";
@@ -56,6 +59,7 @@
   font-weight: 800;
   line-height: normal;
   margin-left: 2vh;
+  margin-bottom: 0 !important;
 }
   
 .track-card-container {
@@ -84,6 +88,10 @@
 /* Genre Card */
 .genre-card {
   height: 50px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  border-bottom: 1px solid #2a363f;
 }
 .genre-card h2 {
   margin-left: 2vh;

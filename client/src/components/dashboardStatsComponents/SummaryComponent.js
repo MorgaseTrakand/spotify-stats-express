@@ -50,6 +50,7 @@ function SummaryComponent({ artistsData, trackData, genreData, albumData, setTer
                 artistName={artist.name}
                 position={artist.position}
                 id={artist.id}
+                className={index === 9 ? 'last-track' : ''}
               />
             ))}
           </div>
@@ -70,7 +71,8 @@ function SummaryComponent({ artistsData, trackData, genreData, albumData, setTer
                     artistNames={track.artist.map(artist => artist).join(' / ') || 'Unknown'}
                     position={track.position}
                     id={track.id}
-                  />
+                    className={index === 9 ? 'last-track' : ''}
+                    />
                 ))}
               </div>
             </div>
@@ -86,6 +88,7 @@ function SummaryComponent({ artistsData, trackData, genreData, albumData, setTer
                     albumName={album[0]}
                     imageSrc={album[1]}
                     position={index + 1}
+                    className={index === 9 ? 'last-track' : ''}
                   />
                 ))}
               </div>
@@ -98,6 +101,7 @@ function SummaryComponent({ artistsData, trackData, genreData, albumData, setTer
                       key={index}
                       genreName={genre[0]}
                       position={index + 1}
+                      className={index === 9 ? 'last-track' : ''}
                     />
                   ))}
               </div>

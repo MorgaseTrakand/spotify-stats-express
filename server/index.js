@@ -51,6 +51,12 @@ const gatherUserData = async (access_token) => {
   }
 } 
 
+app.get('/test', async (req, res) => {
+  const access_token = 'BQAGfZXHhf5eWeeJ_4r6LgEGLzyIk2WwOsT-XYFewOEEGniTx7f10nnpBvJY9hsPKGGtAzpnrC7Y08JH9RJ12dm8lwxjWEqCWZ5jcp5VMzswNaMfGJYiGyuPKhDHorDXbE1Zpi_88JImw9NvgeyHm2G0Ap87OqPSrRc5IkrCrgj7ZYemGrTjlAqSL3M9fCFFgLKp9cUGM5gf8x7iSNG9W7n35y_O5XWZjQ'
+  const data = await gatherUserData(access_token)
+  res.send(data)
+})
+
 //helper function to handle database checking and population
 const handleDBCheckingAndPopulation = async (email, display_name, id) => {
   try {
@@ -101,7 +107,7 @@ app.get('/callback', csrfProtection, async (req, res) => {
       await handleDBCheckingAndPopulation(email=userData.email, display_name=userData.display_name, id=userData.id)
       redirect_url = 'http://localhost:3000/dashboard'
       res.cookie('access_token', access_token, { maxAge: 3600000, httpOnly: true, secure: false });
-      res.cookie('refresh_token', refresh_token, { maxAge: 3600000, httpOnly: true, secure: false });
+      res.cookie('refresh_token', refresh_token, { maxAge: 84400000, httpOnly: true, secure: false });
       res.cookie('logged_in', 'true', { maxAge: 3600000, secure: false })
       res.redirect(redirect_url);
   }
@@ -117,19 +123,24 @@ app.get('/account-data', csrfProtection, async (req, res) => {
     if (access_token == undefined) {
       access_token = await refreshToken(refresh_token)
       res.cookie('access_token', access_token, { maxAge: 3600000, httpOnly: true, secure: false });
-    }
-    
+    } 
     const userData = await gatherUserData(access_token)
     res.json(userData)
   } catch (error) {
-    console.log(error)
+    console.error('Error processing request:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 })
 
 app.get('/user-data', csrfProtection, async (req, res) => {
   try {
     const term = req.query.term;
-    const access_token = req.cookies['access_token']
+    var access_token = req.cookies['access_token'];
+    const refresh_token = req.cookies['refresh_token']
+    if (access_token == undefined) {
+      access_token = await refreshToken(refresh_token)
+      res.cookie('access_token', access_token, { maxAge: 3600000, httpOnly: true, secure: false });
+    }
     const data = {
       user: [], songs: [], artists: [], albums: [], genres: [],
       song_popularity: { Popular: 0, Average: 0, Obscure: 0 },
@@ -154,9 +165,19 @@ app.get('/user-data', csrfProtection, async (req, res) => {
           artist: track.artists.map(artist => artist.name),
           image: track.album.images,
           id: track.id,
-          genres: track.genres,
           popularity: track.popularity,
-          albums: track.album,
+          albums: {
+            album_type: track.album.album_type,
+            artists: track.album.artists.map(artist => ({
+              name: artist.name,
+              uri: artist.uri
+            })),
+            external_urls: track.album.external_urls,
+            images: track.album.images,
+            name: track.album.name,
+            release_date: track.album.release_date,
+            uri: track.album.uri
+          },
           length: track.duration_ms/1000
         }));
         data.songs = topTracks;
@@ -196,60 +217,6 @@ app.get('/user-data', csrfProtection, async (req, res) => {
   }
 });
 
-app.get('/token_valid', csrfProtection, async (req, res) => {
-  const me_url = 'https://api.spotify.com/v1/me';
-  const access_token = req.query.access_token;
-  let isValid = false;
-
-  try {
-    const response = await axios.get(me_url, {
-      headers: {
-        'Authorization': `Bearer ${access_token}`
-      }
-    });
-
-    if (response.status === 200) {
-      isValid = true;
-      res.json( {"valid": isValid} );
-    }
-  } catch (error) {
-    console.error("Error in Axios request:", error);
-    // Check if the error is due to an invalid access token
-    if (error.response && error.response.status === 401) {
-      res.json( {"valid": isValid} ); // Access token is invalid
-    } else {
-      res.status(500).send("Internal Server Error");
-    }
-  }
-});
-
-app.get('/refresh_token', async (req, res) => {
-  try {
-    const refreshToken = req.cookies['refresh_token'];
-    const response = await axios({
-      method: 'post',
-      url: 'https://accounts.spotify.com/api/token',
-      params: {
-        grant_type: 'refresh_token',
-        refresh_token: refreshToken,
-      },
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      auth: {
-        username: CLIENT_ID,
-        password: CLIENT_SECRET,
-      },
-    });
-    console.log(response.data.access_token)
-    const access_token = response.data.access_token;
-    res.cookie('access_token', access_token, { maxAge: 3600000, httpOnly: true, secure: false });
-    res.end()
-  } catch (error) {
-    console.error('Error refreshing token:', error.message);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
 
 const refreshToken = async (refreshToken) => {
   try {

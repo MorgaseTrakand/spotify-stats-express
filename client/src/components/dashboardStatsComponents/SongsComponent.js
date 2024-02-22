@@ -56,6 +56,7 @@ function SongsComponent({ trackData, setTerm, songPopularity, songLength}) {
                   artistNames={track.artist.map(artist => artist).join(' / ') || 'Unknown'}
                   position={track.position}
                   id={track.id}
+                  className={index === 49 ? 'last-track' : ''}
                 />
               ))}
           </div>

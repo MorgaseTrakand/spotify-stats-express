@@ -18,6 +18,7 @@ function GenreComponent({ genreData, setTerm }) {
                 key={index}
                 genreName={genre[0]}
                 position={index + 1}
+                className={index === 49 ? 'last-track' : ''}
               />
             ))}
           </div>

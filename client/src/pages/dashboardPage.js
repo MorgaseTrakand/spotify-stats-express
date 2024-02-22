@@ -16,7 +16,6 @@ function AuthorizedPage() {
   const username = userData[1]
 
   useEffect(() => {
-    localStorage.setItem('option', 'All Time')
     const spinner = document.querySelector(".lds-ring");
     const outlinedContainer = document.querySelector(".outlined-stats-container");
 

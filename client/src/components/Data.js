@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDataContext } from '../DataContext';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
@@ -11,39 +11,26 @@ It basically saves the page.js files from clutter so that the focus for those fi
 const DataWrapper = ({ children }) => {
   const { setArtistsData, setTrackData, setGenreData, setAlbumData, setUserData, term, setSongPopularity, setArtistPopularity, setSongLength } = useDataContext();
   const navigate = useNavigate()
+  const [savedTerm, setSavedTerm] = useState(localStorage.getItem('savedOption'))
 
   function logout() {
     localStorage.removeItem('option')
+    localStorage.removeItem('savedOption')
     fetch('http://localhost:5000/logout')
+    .catch(error => {
+      console.error('Fetch error:', error);
+    });
     navigate('/')
   }
 
   useEffect(() => {
-    if (Cookies.get('logged_in') == 'true') {
-      gatherData()
-    }
-    else {
-      noAccessToken();
-    }
+    setSavedTerm(localStorage.getItem('savedOption'))
+    console.log(savedTerm)
+    gatherData()
   }, [term]);
   
-  function noAccessToken() {
-    console.log("no access")
-    fetch('http://localhost:5000/refresh_token')
-    .then(response => {
-      if (response.ok) {
-        console.log("refreshed token gathering data in data.js");
-        gatherData();
-      } else {
-        logout();
-      }
-    })
-    .catch(error => {
-      console.error('Error: ', error);
-    });
-  }
-
   function setData(data) {
+    console.log(data)
     setTrackData(data.songs) 
     setArtistsData(data.artists) 
     setGenreData(data.genres) 
@@ -56,20 +43,19 @@ const DataWrapper = ({ children }) => {
 
 
   function gatherData() {
-    fetch(`http://localhost:5000/user-data?term=${term}`, {
+    fetch(`http://localhost:5000/user-data?term=${savedTerm}`, {
       method: 'GET',
       credentials: 'include'
     })
     .then(response => {
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        logout()
       }
       return response.json();
     })
     .then(data => {
       setData(data)
       console.log("updating data")
-
       const spinner = document.querySelector(".lds-ring");
       const outlinedContainer = document.querySelector(".outlined-stats-container");
       spinner.classList.add("display-none");
